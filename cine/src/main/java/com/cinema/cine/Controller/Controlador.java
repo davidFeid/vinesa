@@ -68,7 +68,7 @@ public class Controlador {
 
     //Salas
     @GetMapping
-    @RequestMapping(value = "ConsultarSala",method =RequestMethod.GET)
+    @RequestMapping(value = "ConsultarSalas",method =RequestMethod.GET)
     public ResponseEntity<?> ConsultarSala(){
         List<Sala> listarSala=this.ssimpl.ConsultarSala();
         return ResponseEntity.ok(listarSala);
@@ -104,7 +104,7 @@ public class Controlador {
 
     //Butacas
     @GetMapping
-    @RequestMapping(value = "ConsultarButaca",method =RequestMethod.GET)
+    @RequestMapping(value = "ConsultarButacas",method =RequestMethod.GET)
     public ResponseEntity<?> ConsultarButaca(){
         List<Butaca> listarButaca=this.bsimpl.ConsultarButaca();
         return ResponseEntity.ok(listarButaca);
@@ -141,7 +141,7 @@ public class Controlador {
 
     //Usuarios
     @GetMapping
-    @RequestMapping(value = "ConsultarUsuario",method =RequestMethod.GET)
+    @RequestMapping(value = "ConsultarUsuarios",method =RequestMethod.GET)
     public ResponseEntity<?> ConsultarUsuario(){
         List<Usuario> listarUsuario=this.usimpl.ConsultarUsuario();
         return ResponseEntity.ok(listarUsuario);
