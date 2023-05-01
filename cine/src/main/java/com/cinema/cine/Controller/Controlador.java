@@ -1,9 +1,7 @@
 package com.cinema.cine.Controller;
 
-import com.cinema.cine.Entity.Butaca;
-import com.cinema.cine.Entity.Pelicula;
-import com.cinema.cine.Entity.Sala;
-import com.cinema.cine.Entity.Usuario;
+import com.cinema.cine.Entity.*;
+import com.cinema.cine.Service.AdminServiceIMPL.ASIMPL;
 import com.cinema.cine.Service.ButacaServiceIMPL.BSIMPL;
 import com.cinema.cine.Service.SalaServiceIMPL.SSIMPL;
 import com.cinema.cine.Service.PeliculaServiceIMPL.PSIMPL;
@@ -18,16 +16,18 @@ import java.util.List;
 @RestController
 @CrossOrigin("*")
 public class Controlador {
-    public Controlador(PSIMPL psimpl, SSIMPL ssimpl, USIMPL usimpl, BSIMPL bsimpl) {
+    public Controlador(PSIMPL psimpl, SSIMPL ssimpl, USIMPL usimpl, BSIMPL bsimpl, ASIMPL asimpl) {
         this.psimpl = psimpl;
         this.ssimpl = ssimpl;
         this.usimpl = usimpl;
         this.bsimpl = bsimpl;
+        this.asimpl = asimpl;
     }
     private final PSIMPL psimpl;
     private final SSIMPL ssimpl;
     private  final  BSIMPL bsimpl;
     private final USIMPL usimpl;
+    private final ASIMPL asimpl;
 
     //Peliculas
     @GetMapping
@@ -169,6 +169,21 @@ public class Controlador {
     public ResponseEntity<?> EliminarUsuario(@PathVariable int id){
         this.usimpl.EliminarUsuario(id);
         return ResponseEntity.ok().build();
+    }
+
+    //Admin
+    @GetMapping
+    @RequestMapping(value = "BuscarAdmin/{id}",method =RequestMethod.GET)
+    public ResponseEntity<?> BuscarAdmin(@PathVariable int id){
+        Admin admin=this.asimpl.BuscarAdmin(id);
+        return ResponseEntity.ok(admin);
+    }
+
+    @PostMapping
+    @RequestMapping(value = "LoginAdmin",method =RequestMethod.POST)
+    public ResponseEntity<?> LoginAdmin(@RequestBody Admin admin){
+        Boolean adminLogueado=this.asimpl.LoginAdmin(admin);
+        return ResponseEntity.ok(adminLogueado);
     }
 
 }

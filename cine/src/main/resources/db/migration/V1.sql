@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
-                         `Id_admin` int(11) NOT NULL,
+                         `Id_admin` int(11) NOT NULL PRIMARY KEY,
                          `Password` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
                          `Nombre` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
                          `Estado` int(11) DEFAULT 1

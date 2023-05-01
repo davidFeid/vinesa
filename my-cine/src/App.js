@@ -1,24 +1,27 @@
+import React from 'react';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import HomePage from './pages/Home';
+import MyProtectedComponent from './pages/MyProtectedComponent';
+import RouteProtected from './pages/RouteProtected';
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
 import Layout  from "./pages/Layout";
 import About  from "./pages/About";
 import Home  from "./pages/Home";
 import Default  from "./pages/Default";
 import Dashboard  from "./pages/Dashboard";
 import Pelicula  from "./pages/Pelicula";
+import LoginAdminForm  from "./pages/Login/LoginAdminForm";
+
 function App() {
     return (
-        <div>
-            <h1>Routes</h1>
             <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route path="peliculas" element={<Pelicula />} />
-                    <Route path="/" element={<Home />} />
-                    <Route path="dashboard" element={<Dashboard />} />
-                    <Route path="*" element={<Default />} />
+                <Route exact path="/" element={<Layout />} />
+                <Route exact path="/login-admin" element={<LoginAdminForm />} />
+                <Route exact path="/home" element={<MyProtectedComponent exact path="/home" allowedRoles={['admin', 'user']}><HomePage /></MyProtectedComponent>} />
+                <Route exact path="/admin" element={<MyProtectedComponent exact path="/admin" allowedRoles={['admin', 'user']}><HomePage /></MyProtectedComponent>}>
+
                 </Route>
             </Routes>
-        </div>
     );
 }
 
