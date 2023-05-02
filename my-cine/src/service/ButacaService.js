@@ -1,28 +1,28 @@
 import axios  from "axios";
 import {renderToReadableStream} from "react-dom/server";
 
-export class SalaService {
+export class ButacaService {
     baseUrl = `http://localhost:8080/CRUDRepo/`;
     getAll(){
-        return axios.get(this.baseUrl +"ConsultarSalas").then(res => res.data);
+        return axios.get(this.baseUrl +"ConsultarButacas").then(res => res.data);
     }
 
-    save(sala){
-        return axios.post(this.baseUrl + "CrearSala", sala)
+    save(butaca){
+        return axios.post(this.baseUrl + "CrearButaca", butaca)
             .then(res =>{
-            if (res.status === 201 || res.status === 200) { // si la petición se hizo con éxito
-                return res.data; // retornar la data de la respuesta
-            } else { // si hubo un error en la petición
-                throw new Error('Hubo un error en la petición'); // lanzar una excepción para manejar el error
-                    }
-                })
+                if (res.status === 201 || res.status === 200) { // si la petición se hizo con éxito
+                    return res.data; // retornar la data de la respuesta
+                } else { // si hubo un error en la petición
+                    throw new Error('Hubo un error en la petición'); // lanzar una excepción para manejar el error
+                }
+            })
             .catch(error => {
-                    console.error(error); // manejar el error
-                });
+                console.error(error); // manejar el error
+            });
     }
 
-    edit(sala){
-        return axios.put(this.baseUrl + "ModificarSala/" + sala.IdSala,sala)
+    edit(butaca){
+        return axios.put(this.baseUrl + "ModificarButaca/" + butaca.IdButaca,butaca)
             .then(res =>{
                 if (res.status === 201 || res.status === 200) { // si la petición se hizo con éxito
                     return res.data; // retornar la data de la respuesta
@@ -36,7 +36,7 @@ export class SalaService {
     }
 
     delete(id){
-        return axios.delete(this.baseUrl + "EliminarSala/" + id)
+        return axios.delete(this.baseUrl + "EliminarButaca/" + id)
             .then(res =>{
                 if (res.status === 201 || res.status === 200) { // si la petición se hizo con éxito
                     return res.data; // retornar la data de la respuesta

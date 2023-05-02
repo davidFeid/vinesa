@@ -1,5 +1,6 @@
 package com.cinema.cine.Service.UsuarioServiceIMPL;
 
+import com.cinema.cine.Entity.Sala;
 import com.cinema.cine.Entity.Usuario;
 import com.cinema.cine.Repository.UsuarioRepo;
 import com.cinema.cine.Service.UsuarioService;
@@ -53,6 +54,15 @@ public class USIMPL implements UsuarioService {
 
     @Override
     public void EliminarUsuario(int id) {
-        this.repo.deleteById(id);
+        Usuario usuarioExistente = this.repo.findById(id).orElse(null);
+        if (usuarioExistente != null) {
+            if (usuarioExistente.getEstado() == 1) {
+                usuarioExistente.setEstado(0);
+            } else {
+                usuarioExistente.setEstado(1);
+            }
+            this.repo.save(usuarioExistente);
+        }
+
     }
 }

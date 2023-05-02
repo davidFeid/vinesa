@@ -30,9 +30,10 @@ public class Usuario {
     private String Fehca_alta;
     @Column(name = "Tipo_usuario")
     private String Tipo_usuario;
+    @Column(name ="imagen")
+    private String imagen;
     @Column(name = "Estado")
     private int Estado;
-
     public int getId_usuario() {
         return Id_usuario;
     }
@@ -119,6 +120,14 @@ public class Usuario {
 
     public void setTipo_usuario(String tipo_usuario) {
         Tipo_usuario = tipo_usuario;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public int getEstado() {

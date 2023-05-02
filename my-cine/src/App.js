@@ -12,6 +12,7 @@ import Default  from "./pages/Default";
 import Dashboard  from "./pages/Dashboard";
 import Pelicula  from "./pages/admin/Pelicula";
 import Sala from "./pages/admin/Sala";
+import Butaca from "./pages/admin/Butaca";
 import LoginAdminForm  from "./pages/admin/login/LoginAdminForm";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/admin" element={<MyProtectedComponent path="/admin" allowedRoles={['admin']} element={<LayoutAdmin />}></MyProtectedComponent>}>
                     <Route path="peliculas" element={<Pelicula/>} />
                     <Route path="salas" element={<Sala/>} />
+                    <Route path="butacas" element={<Butaca/>} />
                 </Route>
             </Routes>
     );

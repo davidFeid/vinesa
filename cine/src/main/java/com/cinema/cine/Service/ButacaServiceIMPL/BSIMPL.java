@@ -42,5 +42,15 @@ public class BSIMPL implements ButacaService {
     public  Butaca BuscarButaca(int id) { return this.repo.findById(id).get();}
 
     @Override
-    public void EliminarButaca(int id){this.repo.deleteById(id);}
+    public void EliminarButaca(int id){
+       Butaca butacaExistente = this.repo.findById(id).orElse(null);
+       if(butacaExistente != null){
+           if (butacaExistente.getEstado() ==1 ){
+               butacaExistente.setEstado(0);
+           }else{
+               butacaExistente.setEstado(1);
+           }
+           this.repo.save(butacaExistente);
+       }
+    }
 }

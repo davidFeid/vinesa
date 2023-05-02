@@ -1,7 +1,7 @@
 import logo from '../../logo.svg';
 import '../../App.css';
 import React, {Component} from "react";
-import {PeliculaService} from "../../service/PeliculaService";
+import {SalaService} from "../../service/SalaService";
 
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
@@ -17,8 +17,8 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import 'primereact/resources/themes/nova/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import {SalaService} from "../../service/SalaService";
-export default class Pelicula extends Component{
+
+export default class Sala extends Component{
     constructor() {
         super();
         this.state= {
@@ -54,11 +54,11 @@ export default class Pelicula extends Component{
                 icon : 'pi pi-fw pi-eye',
                 command : () => {this.showShowDialog()}
             },
-            {
+            /*{
                 label : 'Mostrar Imagen',
                 icon : 'pi pi-fw pi-image',
                 command : () => {this.showImageDialog()}
-            },
+            },*/
             {
                 label : 'Activar / Desactivar',
                 icon : 'pi pi-fw pi-trash',
@@ -143,4 +143,152 @@ export default class Pelicula extends Component{
             this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, seleccione una sala' });
         }
     }
+    render(){
+        return(
+            <div style={{margin:'2em'}}>
+                <Menubar model={this.items}></Menubar>
+                <br/>
+                <Panel header="Salas">
+                    <DataTable value={this.state.salas} paginator={true} rows={10} rowsPerPageOptions={[5, 10, 25, 50]} removableSort  paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                               currentPageReportTemplate="{first} to {last} of {totalRecords}" tableStyle={{ minWidth: '50rem' }} selectionMode={"single"} selection={this.state.selectedSala} onSelectionChange={e => this.setState({selectedSala: e.value, footer: this.footerEdit})}>
+                        <Column sortable filter field="IdSala" header="Id Sala"></Column>
+                        <Column sortable filter field="nombre" header="Nombre"></Column>
+                        <Column sortable filter field="tipo" header="Tipos de Sala"></Column>
+                        <Column sortable filter field="filas" header="Filas"></Column>
+                        <Column sortable filter field="butacasporfila" header="Butacas por Fila"></Column>
+                        <Column sortable filter field="estado" header="Estado"></Column>
+                    </DataTable>
+                </Panel>
+                <Dialog header="Crear Sala" visible={this.state.visible} style={{ width: '400px' }} footer={this.state.footer} modal={true} onHide={() => this.setState({visible : false})}>
+                    <form id="sala-form">
+                        <br/>
+                        <span className="p-float-label">
+                            <InputText value={this.state.sala.nombre} style={{width: '100%'}} required id="nombre" onChange={(e) => {
+                                let val = e.target.value;
+                                this.setState(prevState =>{
+                                    let sala = Object.assign({}, prevState.sala);
+                                    sala.nombre = val;
+                                    return { sala };
+                                })}
+                            }></InputText>
+                            <label htmlFor="nombre">Nombre de la Sala</label>
+                        </span>
+                        <br/>
+
+                        <span className="p-float-label">
+                            <InputText value={this.state.sala.tipo} style={{width: '100%'}} id="tipo" onChange={(e) => {
+                                let val = e.target.value;
+                                this.setState(prevState =>{
+                                    let sala = Object.assign({}, prevState.sala);
+                                    sala.tipo = val;
+
+                                    return { sala };
+                                })}
+                            }></InputText>
+                            <label htmlFor="tipo">Tipo de salas</label>
+                        </span>
+                        <br/>
+
+                        <span className="p-float-label">
+                            <InputText value={this.state.sala.filas} style={{width: '100%'}} id="filas" onChange={(e) => {
+                                let val = e.target.value;
+                                this.setState(prevState =>{
+                                    let sala = Object.assign({}, prevState.sala);
+                                    sala.filas = val;
+
+                                    return { sala };
+                                })}
+                            }></InputText>
+                            <label htmlFor="filas">Filas</label>
+                        </span>
+                        <br/>
+
+                        <span className="p-float-label">
+                            <InputTextarea value={this.state.sala.butacasporfila} style={{width: '100%'}} id="butacasporfila" onChange={(e) => {
+                                let val = e.target.value;
+                                this.setState(prevState =>{
+                                    let sala = Object.assign({}, prevState.sala);
+                                    sala.butacasporfila = val;
+
+                                    return { sala };
+                                })}
+                            }></InputTextarea>
+                            <label htmlFor="butacasporfila">Butacas por fila</label>
+                        </span>
+                        <br/>
+
+                    </form>
+                </Dialog>
+                <Dialog header="Mostrar Sala" visible={this.state.visibleShow} style={{ width: '70%' }} modal={true} onHide={() => this.setState({visibleShow : false})}>
+                    <Fieldset legend={this.state.sala.titulo}>
+                        <label htmlFor="nombre"><b>Nombre de la Sala:</b></label>
+                        <p id="nombre">{this.state.sala.nombre}</p>
+                        <label htmlFor="tipo"><b>Tipo de Sala:</b></label>
+                        <p id="tipo">{this.state.sala.tipo}</p>
+                        <label htmlFor="filas"><b>Filas:</b></label>
+                        <p id="filas">{this.state.sala.filas}</p>
+                        <label htmlFor="butacasporfila"><b>butacas por fila:</b></label>
+                        <p id="butacasporfila">{this.state.sala.butacasporfila}</p>
+                        <label htmlFor="estado"><b>Estado:</b></label>
+                        <p id="estado">{this.state.sala.estado}</p>
+                    </Fieldset>
+                </Dialog>
+
+                <Toast ref={(el) => this.toast = el} />
+            </div>
+        );
+    }
+
+    showSaveDialog(){
+        this.setState({
+            visible : true,
+            sala : {
+                IdSala:null,
+                nombre:null,
+                tipo: null,
+                filas: null,
+                butacasporfila:null,
+                estado:null
+            },
+            footer: this.footerSave
+        });
+    }
+
+    showEditDialog() {
+        if (this.state.selectedSala && this.state.selectedSala.IdSala) {
+            this.setState({
+                visible: true,
+                sala: {
+                    IdSala: this.state.selectedSala.IdSala,
+                    nombre:this.state.selectedSala.nombre,
+                    tipo: this.state.selectedSala.tipo,
+                    filas: this.state.selectedSala.filas,
+                    butacasporfila: this.state.selectedSala.butacasporfila,
+                    estado:this.state.selectedSala.estado
+                },
+                footer: this.footerEdit
+            });
+        } else {
+            this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, seleccione una sala' });
+        }
+    }
+
+    showShowDialog() {
+        if (this.state.selectedSala && this.state.selectedSala.IdSala) {
+            this.setState({
+                visibleShow: true,
+                sala: {
+                    IdSala: this.state.selectedSala.IdSala,
+                    nombre:this.state.selectedSala.nombre,
+                    tipo: this.state.selectedSala.tipo,
+                    filas: this.state.selectedSala.filas,
+                    butacasporfila: this.state.selectedSala.butacasporfila,
+                    estado:this.state.selectedSala.estado
+                }
+            });
+        } else {
+            this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, seleccione una sala' });
+        }
+    }
+
 }
