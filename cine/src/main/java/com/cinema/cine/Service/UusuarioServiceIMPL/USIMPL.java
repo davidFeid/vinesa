@@ -53,5 +53,7 @@ public class USIMPL implements UsuarioService {
     public Usuario BuscarUsuario(int id) { return  this.repo.findById(id).get();}
 
     @Override
-    public void EliminarUsuario(int id) { this.repo.deleteById(id); }
+    public void EliminarUsuario(int id) {
+        this.repo.deleteById(id);
+    }
 }

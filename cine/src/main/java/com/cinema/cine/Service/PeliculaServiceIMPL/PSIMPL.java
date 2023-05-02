@@ -54,6 +54,17 @@ public class PSIMPL implements PeliculaService {
 
     @Override
     public void EliminarPelicula(int id) {
-        this.repo.deleteById(id);
+        //this.repo.deleteById(id);
+        Pelicula peliculaExistente = this.repo.findById(id).orElse(null);
+        if (peliculaExistente != null) {
+            // Actualizar los valores de la película existente
+            if(peliculaExistente.getEstado() == 1){
+                peliculaExistente.setEstado(0);
+            }else{
+                peliculaExistente.setEstado(1);
+            }
+            // Guardar la película actualizada en la base de datos
+            this.repo.save(peliculaExistente);
+        }
     }
 }

@@ -11,6 +11,8 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
+import { Fieldset } from 'primereact/fieldset';
+import { InputTextarea } from 'primereact/inputtextarea';
 
 import 'primereact/resources/themes/nova/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -22,6 +24,8 @@ export default class Pelicula extends Component{
         this.state= {
             peliculas: [],
             visible : false,
+            visibleShow : false,
+            visibleImage : false,
             pelicula : {
                 idPelicula: null,
                 titulo: null,
@@ -49,7 +53,17 @@ export default class Pelicula extends Component{
                 command : () => {this.showEditDialog()}
             },
             {
-                label : 'Eliminar',
+                label : 'Mostrar',
+                icon : 'pi pi-fw pi-eye',
+                command : () => {this.showShowDialog()}
+            },
+            {
+                label : 'Mostrar Imagen',
+                icon : 'pi pi-fw pi-image',
+                command : () => {this.showImageDialog()}
+            },
+            {
+                label : 'Activar / Desactivar',
                 icon : 'pi pi-fw pi-trash',
                 command : () => {this.delete()}
             }
@@ -144,10 +158,8 @@ export default class Pelicula extends Component{
                         <Column sortable filter field="titulo" header="Titulo"></Column>
                         <Column sortable filter field="directores" header="Directores"></Column>
                         <Column sortable filter field="actores" header="Actores"></Column>
-                        <Column sortable filter field="descripcion" header="Descripcion"></Column>
                         <Column sortable filter field="genero" header="Genero"></Column>
                         <Column sortable filter field="imagen" header="Imagen"></Column>
-                        <Column sortable filter field="video" header="Video"></Column>
                         <Column sortable filter field="estado" header="Estado"></Column>
                     </DataTable>
                 </Panel>
@@ -193,7 +205,7 @@ export default class Pelicula extends Component{
                     </span>
                         <br/>
                         <span className="p-float-label">
-                        <InputText value={this.state.pelicula.descripcion} style={{width: '100%'}} id="descripcion" onChange={(e) => {
+                        <InputTextarea value={this.state.pelicula.descripcion} style={{width: '100%'}} id="descripcion" onChange={(e) => {
                             let val = e.target.value;
                             this.setState(prevState =>{
                                 let pelicula = Object.assign({}, prevState.pelicula);
@@ -201,7 +213,7 @@ export default class Pelicula extends Component{
 
                                 return { pelicula };
                             })}
-                        }></InputText>
+                        }></InputTextarea>
                         <label htmlFor="descripcion">Descripcion</label>
                     </span>
                         <br/>
@@ -245,6 +257,28 @@ export default class Pelicula extends Component{
                     </span>
                     </form>
                 </Dialog>
+                <Dialog header="Mostrar Pelicula" visible={this.state.visibleShow} style={{ width: '70%' }} modal={true} onHide={() => this.setState({visibleShow : false})}>
+                    <Fieldset legend={this.state.pelicula.titulo}>
+                        <label htmlFor="directores"><b>Directores:</b></label>
+                        <p id="directores">{this.state.pelicula.directores}</p>
+                        <label htmlFor="actores"><b>Actores:</b></label>
+                        <p id="actores">{this.state.pelicula.actores}</p>
+                        <label htmlFor="descripcion"><b>Descripcion:</b></label>
+                        <p id="descripcion">{this.state.pelicula.descripcion}</p>
+                        <label htmlFor="genero"><b>Genero:</b></label>
+                        <p id="genero">{this.state.pelicula.genero}</p>
+                        <label htmlFor="video"><b>Video:</b></label>
+                        <p id="video">{this.state.pelicula.video}</p>
+                        <label htmlFor="estado"><b>Estado:</b></label>
+                        <p id="estado">{this.state.pelicula.estado}</p>
+                    </Fieldset>
+                </Dialog>
+                <Dialog header="Mostrar Imagen" visible={this.state.visibleImage} style={{ width: '70%' }} modal={true} onHide={() => this.setState({visibleImage : false})}>
+                    <Fieldset legend={this.state.pelicula.titulo}>
+                        <label htmlFor="imagen"><b>Imagen:</b></label>
+                        <p id="imagen">{this.state.pelicula.imagen}</p>
+                    </Fieldset>
+                </Dialog>
                 <Toast ref={(el) => this.toast = el} />
             </div>
         );
@@ -284,6 +318,42 @@ export default class Pelicula extends Component{
                     estado: this.state.selectedPelicula.estado
                 },
                 footer: this.footerEdit
+            });
+        } else {
+            this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, seleccione una película' });
+        }
+    }
+
+    showShowDialog() {
+        if (this.state.selectedPelicula && this.state.selectedPelicula.idPelicula) {
+            this.setState({
+                visibleShow: true,
+                pelicula: {
+                    idPelicula: this.state.selectedPelicula.idPelicula,
+                    titulo: this.state.selectedPelicula.titulo,
+                    directores: this.state.selectedPelicula.directores,
+                    actores: this.state.selectedPelicula.actores,
+                    descripcion: this.state.selectedPelicula.descripcion,
+                    genero: this.state.selectedPelicula.genero,
+                    imagen: this.state.selectedPelicula.imagen,
+                    video: this.state.selectedPelicula.video,
+                    estado: this.state.selectedPelicula.estado
+                }
+            });
+        } else {
+            this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, seleccione una película' });
+        }
+    }
+
+    showImageDialog() {
+        if (this.state.selectedPelicula && this.state.selectedPelicula.idPelicula) {
+            this.setState({
+                visibleImage: true,
+                pelicula: {
+                    idPelicula: this.state.selectedPelicula.idPelicula,
+                    titulo: this.state.selectedPelicula.titulo,
+                    imagen: this.state.selectedPelicula.imagen
+                }
             });
         } else {
             this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, seleccione una película' });
