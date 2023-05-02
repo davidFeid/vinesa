@@ -1,8 +1,8 @@
 import { Outlet, Link } from "react-router-dom";
 
-const Layout = () =>{
+const LayoutAdmin = () =>{
     return <div>
-        <h1>Menu</h1>
+        <h1>Menu Admin</h1>
         <nav>
             <ul>
                 <li>
@@ -27,4 +27,4 @@ const Layout = () =>{
     </div>;
 }
 
-export default Layout;
+export default LayoutAdmin;

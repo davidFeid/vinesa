@@ -1,7 +1,7 @@
-import '../../App.css';
+import '../../../App.css';
 import './LoginAdminForm.css';
 import React, {Component} from "react";
-import {AdminService} from "../../service/AdminService";
+import {AdminService} from "../../../service/AdminService";
 
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';

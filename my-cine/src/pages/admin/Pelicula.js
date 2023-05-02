@@ -1,7 +1,7 @@
-import logo from '../logo.svg';
-import '../App.css';
+import logo from '../../logo.svg';
+import '../../App.css';
 import React, {Component} from "react";
-import {PeliculaService} from "../service/PeliculaService";
+import {PeliculaService} from "../../service/PeliculaService";
 
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
