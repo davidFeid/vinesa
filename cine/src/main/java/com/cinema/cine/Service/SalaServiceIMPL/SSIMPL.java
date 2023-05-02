@@ -1,5 +1,6 @@
 package com.cinema.cine.Service.SalaServiceIMPL;
 
+import com.cinema.cine.Entity.Pelicula;
 import com.cinema.cine.Entity.Sala;
 import com.cinema.cine.Repository.SalaRepo;
 import com.cinema.cine.Service.SalaService;
@@ -24,7 +25,21 @@ public class SSIMPL implements SalaService {
     }
 
     @Override
-    public Sala ModificarSala(Sala sala) { return this.repo.save(sala); }
+    public Sala ModificarSala(Sala sala,int id) {
+        Sala salaExistente = this.repo.findById(id).orElse(null);
+        if (salaExistente != null) {
+            salaExistente.setId_sala(sala.getId_sala());
+            salaExistente.setNombre(sala.getNombre());
+            salaExistente.setTipo(sala.getTipo());
+            salaExistente.setFilas(sala.getFilas());
+            salaExistente.setButacasporfila(sala.getButacasporfila());
+            salaExistente.setEstado(sala.getEstado());
+
+            return this.repo.save(salaExistente);
+        }
+        // Si no se encuentra la sala, devolver null
+        return null;
+    }
 
     @Override
     public Sala BuscarSala(int id) { return this.repo.findById(id).get(); }

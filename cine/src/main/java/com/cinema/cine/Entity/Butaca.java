@@ -9,8 +9,10 @@ public class Butaca {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
+    private int Id;
     @Column(name = "Id_butaca")
-    private int Id_butaca;
+    private String Id_butaca;
     @Column(name = "Id_sala")
     private int Id_sala;
     @Column(name = "Fila")
@@ -20,11 +22,15 @@ public class Butaca {
     @Column(name = "Estado")
     private int Estado;
 
-    public int getId_butaca() {
+    public int getId() { return Id; }
+
+    public void setId(int id) { Id = id; }
+
+    public String getId_butaca() {
         return Id_butaca;
     }
 
-    public void setId_butaca(int id_butaca) {
+    public void setId_butaca(String id_butaca) {
         Id_butaca = id_butaca;
     }
 

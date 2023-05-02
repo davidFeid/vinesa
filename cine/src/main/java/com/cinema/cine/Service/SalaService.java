@@ -10,7 +10,7 @@ public interface SalaService {
 
     public Sala CrearSala(Sala sala);
 
-    public Sala ModificarSala(Sala lista);
+    public Sala ModificarSala(Sala sala, int id);
 
     public Sala BuscarSala(int id);
 

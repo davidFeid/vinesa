@@ -7,7 +7,7 @@ import java.util.List;
 public interface ButacaService {
     public List<Butaca> ConsultarButaca();
     public Butaca CrearButaca(Butaca butaca);
-    public Butaca ModificarButaca(Butaca butaca);
+    public Butaca ModificarButaca(Butaca butaca,int id);
     public Butaca BuscarButaca(int id);
     public  void EliminarButaca(int id);
 

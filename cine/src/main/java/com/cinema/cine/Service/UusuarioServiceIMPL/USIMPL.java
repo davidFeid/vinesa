@@ -1,5 +1,6 @@
 package com.cinema.cine.Service.UusuarioServiceIMPL;
 
+import com.cinema.cine.Entity.Sala;
 import com.cinema.cine.Entity.Usuario;
 import com.cinema.cine.Repository.UsuarioRepo;
 import com.cinema.cine.Service.UsuarioService;
@@ -25,7 +26,28 @@ public class USIMPL implements UsuarioService {
     }
 
     @Override
-    public Usuario ModificarUsuario(Usuario usuario) { return this.repo.save(usuario); }
+    public Usuario ModificarUsuario(Usuario usuario,int id) {
+        Usuario usuarioExistente = this.repo.findById(id).orElse(null);
+        if (usuarioExistente != null) {
+            usuarioExistente.setId_usuario(usuario.getId_usuario());
+            usuarioExistente.setUsuario(usuario.getUsuario());
+            usuarioExistente.setPassword(usuario.getPassword());
+            usuarioExistente.setNombre(usuario.getNombre());
+            usuarioExistente.setApellido(usuario.getApellido());
+            usuarioExistente.setDNI(usuario.getDNI());
+            usuarioExistente.setDireccion(usuario.getDireccion());
+            usuarioExistente.setCiudad(usuario.getCiudad());
+            usuarioExistente.setCodigo_postal(usuario.getCodigo_postal());
+            usuarioExistente.setFehca_alta(usuario.getFehca_alta());
+            usuarioExistente.setTipo_usuario(usuario.getTipo_usuario());
+            usuarioExistente.setEstado(usuario.getEstado());
+
+            return this.repo.save(usuarioExistente);
+        }
+        // Si no se encuentra la sala, devolver null
+        return null;
+    }
+
 
     @Override
     public Usuario BuscarUsuario(int id) { return  this.repo.findById(id).get();}

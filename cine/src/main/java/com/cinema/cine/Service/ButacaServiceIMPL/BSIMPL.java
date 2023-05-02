@@ -1,6 +1,7 @@
 package com.cinema.cine.Service.ButacaServiceIMPL;
 
 import com.cinema.cine.Entity.Butaca;
+import com.cinema.cine.Entity.Usuario;
 import com.cinema.cine.Repository.ButacaRepo;
 import com.cinema.cine.Service.ButacaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,19 @@ public class BSIMPL implements ButacaService {
     }
 
     @Override
-    public Butaca ModificarButaca(Butaca butaca){ return  this.repo.save(butaca);}
+    public Butaca ModificarButaca(Butaca butaca,int id){
+        Butaca butacaExistente = this.repo.findById(id).orElse(null);
+        if (butacaExistente != null) {
+            butacaExistente.setId_butaca(butaca.getId_butaca());
+            butacaExistente.setId_sala(butaca.getId_sala());
+            butacaExistente.setFila(butaca.getFila());
+            butacaExistente.setColumna(butaca.getColumna());
+            butacaExistente.setEstado(butaca.getEstado());
+
+            return this.repo.save(butacaExistente);
+        }
+        return null;
+    }
 
     @Override
     public  Butaca BuscarButaca(int id) { return this.repo.findById(id).get();}

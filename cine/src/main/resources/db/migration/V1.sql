@@ -50,28 +50,16 @@ INSERT INTO `admin` (`Id_admin`, `Password`, `Nombre`, `Estado`) VALUES
 
 DROP TABLE IF EXISTS `butacas`;
 CREATE TABLE `butacas` (
-                           `Id_butaca` int(11) NOT NULL,
-                           `Id_sala` int(11) NOT NULL,
+                           `Id` int(11) NOT NULL,
+                           `Id_butaca` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+                           `Id_sala`  int(11) NOT NULL,
                            `Fila` int(11) DEFAULT NULL,
                            `Columna` int(11) DEFAULT NULL,
                            `Estado` int(11) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- Volcado de datos para la tabla `butacas`
---
 
-INSERT INTO `butacas` (`Id_butaca`, `Id_sala`, `Fila`, `Columna`, `Estado`) VALUES
-                                                                                (1, 1, 1, 1, 1),
-                                                                                (2, 1, 1, 2, 1),
-                                                                                (3, 1, 1, 3, 1),
-                                                                                (4, 1, 1, 4, 1),
-                                                                                (5, 1, 1, 5, 1),
-                                                                                (6, 2, 2, 6, 1),
-                                                                                (7, 2, 2, 7, 1),
-                                                                                (8, 2, 2, 8, 1),
-                                                                                (9, 2, 2, 9, 1),
-                                                                                (10, 2, 2, 10, 1);
+
 
 -- --------------------------------------------------------
 
@@ -81,7 +69,8 @@ INSERT INTO `butacas` (`Id_butaca`, `Id_sala`, `Fila`, `Columna`, `Estado`) VALU
 
 DROP TABLE IF EXISTS `butacasreservas`;
 CREATE TABLE `butacasreservas` (
-                                   `Id_butaca` int(11) NOT NULL,
+                                   `Id_butaca` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+
                                    `Id_reserva` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -89,8 +78,6 @@ CREATE TABLE `butacasreservas` (
 -- Volcado de datos para la tabla `butacasreservas`
 --
 
-INSERT INTO `butacasreservas` (`Id_butaca`, `Id_reserva`) VALUES
-    (1, 20);
 
 -- --------------------------------------------------------
 
@@ -113,10 +100,6 @@ CREATE TABLE `funciones` (
 -- Volcado de datos para la tabla `funciones`
 --
 
-INSERT INTO `funciones` (`Id_funcion`, `Id_sala`, `Id_pelicula`, `Horario`, `Fecha`, `Precio`, `Estado`) VALUES
-                                                                                                             (1, 1, 1, '18:00:00', '2023-04-25', 7, 1),
-                                                                                                             (2, 2, 5, '18:00:00', '2023-04-25', 7, 1),
-                                                                                                             (3, 3, 2, '18:00:00', '2023-04-25', 7, 1);
 
 -- --------------------------------------------------------
 
@@ -168,8 +151,6 @@ CREATE TABLE `reservas` (
 -- Volcado de datos para la tabla `reservas`
 --
 
-INSERT INTO `reservas` (`Id_reserva`, `Id_funcion`, `Id_usuario`, `Fecha_reserva`, `Precio`, `Estado`) VALUES
-    (20, 1, 1, '2023-04-25 17:32:01', 7, 1);
 
 -- --------------------------------------------------------
 
@@ -191,17 +172,6 @@ CREATE TABLE `salas` (
 -- Volcado de datos para la tabla `salas`
 --
 
-INSERT INTO `salas` (`Id_sala`, `Nombre`, `Tipo`, `Filas`, `Butacasporfila`, `Estado`) VALUES
-                                                                                           (1, 'Sala 1', 'Normal', 10, 20, 1),
-                                                                                           (2, 'Sala 2', 'VOSE', 12, 18, 1),
-                                                                                           (3, 'Sala 3', 'Dolby3D', 8, 16, 1),
-                                                                                           (4, 'Sala 4', 'Normal', 9, 22, 1),
-                                                                                           (5, 'Sala 5', 'D-BOX', 10, 18, 1),
-                                                                                           (6, 'Sala 6', 'VOSE', 11, 20, 1),
-                                                                                           (7, 'Sala 7', 'Sala Dolby', 10, 22, 1),
-                                                                                           (8, 'Sala 8', 'Normal', 8, 24, 1),
-                                                                                           (9, 'Sala 9', 'D-BOX', 12, 16, 1),
-                                                                                           (10, 'Sala 10', 'Normal', 9, 20, 1);
 
 -- --------------------------------------------------------
 
@@ -244,7 +214,8 @@ INSERT INTO `usuarios` (`Id_usuario`, `Usuario`, `Password`, `Nombre`, `Apellido
 -- Indices de la tabla `butacas`
 --
 ALTER TABLE `butacas`
-    ADD PRIMARY KEY (`Id_butaca`,`Id_sala`),
+    ADD PRIMARY KEY (`Id`),
+    ADD UNIQUE KEY (`Id_butaca`,`Id_sala`),
   ADD KEY `IdSala` (`Id_sala`);
 
 --
@@ -291,14 +262,11 @@ ALTER TABLE `usuarios`
     ADD PRIMARY KEY (`Id_usuario`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT de las tablas `butacas`
 --
-
---
--- AUTO_INCREMENT de la tabla `butacas`
 --
 ALTER TABLE `butacas`
-    MODIFY `Id_butaca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+    MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT de la tabla `funciones`

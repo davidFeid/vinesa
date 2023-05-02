@@ -65,7 +65,6 @@ public class Controlador {
         return ResponseEntity.ok().build();
     }
 
-
     //Salas
     @GetMapping
     @RequestMapping(value = "ConsultarSalas",method =RequestMethod.GET)
@@ -78,13 +77,25 @@ public class Controlador {
     @RequestMapping(value = "CrearSala",method =RequestMethod.POST)
     public ResponseEntity<?> CrearSala(@RequestBody Sala sala){
         Sala SalaCreada=this.ssimpl.CrearSala(sala);
+        for (int i=1; i<=SalaCreada.getFilas();i++){
+            for(int j = 1; j<=SalaCreada.getButacasporfila();j++){
+                System.out.println(i+"-"+j);
+                Butaca butaca = new Butaca();
+                butaca.setId_sala(SalaCreada.getId_sala());
+                butaca.setId_butaca(i+"-"+j);
+                butaca.setColumna(j);
+                butaca.setFila(i);
+                butaca.setEstado(1);
+                this.bsimpl.CrearButaca(butaca);
+            }
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(SalaCreada);
     }
 
     @PutMapping
-    @RequestMapping(value = "ModificarSala",method =RequestMethod.PUT)
-    public ResponseEntity<?> ModificarSala(@RequestBody Sala sala){
-        Sala SalaModificada=this.ssimpl.ModificarSala(sala);
+    @RequestMapping(value = "ModificarSala/{id}",method =RequestMethod.PUT)
+    public ResponseEntity<?> ModificarSala(@RequestBody Sala sala,@PathVariable int id){
+        Sala SalaModificada=this.ssimpl.ModificarSala(sala,id);
         return ResponseEntity.status(HttpStatus.CREATED).body(SalaModificada);
     }
 
@@ -94,7 +105,6 @@ public class Controlador {
         Sala sala=this.ssimpl.BuscarSala(id);
         return ResponseEntity.ok(sala);
     }
-
     @DeleteMapping
     @RequestMapping(value = "EliminarSala/{id}",method =RequestMethod.DELETE)
     public ResponseEntity<?> ElimnarSala(@PathVariable int id){
@@ -118,9 +128,9 @@ public class Controlador {
     }
 
     @PutMapping
-    @RequestMapping(value = "ModificarButaca",method =RequestMethod.PUT)
-    public ResponseEntity<?> ModificarButaca(@RequestBody Butaca butaca){
-        Butaca ButacaModificada=this.bsimpl.ModificarButaca(butaca);
+    @RequestMapping(value = "ModificarButaca/{id}",method =RequestMethod.PUT)
+    public ResponseEntity<?> ModificarButaca(@RequestBody Butaca butaca,@PathVariable int id){
+        Butaca ButacaModificada=this.bsimpl.ModificarButaca(butaca, id);
         return ResponseEntity.status(HttpStatus.CREATED).body(ButacaModificada);
     }
 
@@ -138,7 +148,6 @@ public class Controlador {
         return ResponseEntity.ok().build();
     }
 
-
     //Usuarios
     @GetMapping
     @RequestMapping(value = "ConsultarUsuarios",method =RequestMethod.GET)
@@ -146,24 +155,28 @@ public class Controlador {
         List<Usuario> listarUsuario=this.usimpl.ConsultarUsuario();
         return ResponseEntity.ok(listarUsuario);
     }
+
     @PostMapping
     @RequestMapping(value = "CrearUsuario",method =RequestMethod.POST)
     public ResponseEntity<?> CrearUsuario(@RequestBody Usuario usuario){
         Usuario UsuarioCreada=this.usimpl.CrearUsuario(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioCreada);
     }
+
     @PutMapping
-    @RequestMapping(value = "ModificarUsuario",method =RequestMethod.PUT)
-    public ResponseEntity<?> ModificarUsuario(@RequestBody Usuario usuario){
-        Usuario UsuarioModificada=this.usimpl.ModificarUsuario(usuario);
+    @RequestMapping(value = "ModificarUsuario/{id}",method =RequestMethod.PUT)
+    public ResponseEntity<?> ModificarUsuario(@RequestBody Usuario usuario,@PathVariable int id){
+        Usuario UsuarioModificada=this.usimpl.ModificarUsuario(usuario, id);
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioModificada);
     }
+
     @GetMapping
     @RequestMapping(value = "BuscarUsuario/{id}",method =RequestMethod.GET)
     public ResponseEntity<?> BuscarUsuario(@PathVariable int id){
         Usuario usuario=this.usimpl.BuscarUsuario(id);
         return ResponseEntity.ok(usuario);
     }
+
     @DeleteMapping
     @RequestMapping(value = "EliminarUsuario/{id}",method =RequestMethod.DELETE)
     public ResponseEntity<?> EliminarUsuario(@PathVariable int id){
