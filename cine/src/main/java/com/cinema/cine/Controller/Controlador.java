@@ -5,7 +5,7 @@ import com.cinema.cine.Service.AdminServiceIMPL.ASIMPL;
 import com.cinema.cine.Service.ButacaServiceIMPL.BSIMPL;
 import com.cinema.cine.Service.SalaServiceIMPL.SSIMPL;
 import com.cinema.cine.Service.PeliculaServiceIMPL.PSIMPL;
-import com.cinema.cine.Service.UusuarioServiceIMPL.USIMPL;
+import com.cinema.cine.Service.UsuarioServiceIMPL.USIMPL;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

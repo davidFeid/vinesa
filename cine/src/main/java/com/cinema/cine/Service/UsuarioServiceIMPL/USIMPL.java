@@ -1,6 +1,5 @@
-package com.cinema.cine.Service.UusuarioServiceIMPL;
+package com.cinema.cine.Service.UsuarioServiceIMPL;
 
-import com.cinema.cine.Entity.Sala;
 import com.cinema.cine.Entity.Usuario;
 import com.cinema.cine.Repository.UsuarioRepo;
 import com.cinema.cine.Service.UsuarioService;
