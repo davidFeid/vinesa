@@ -11,6 +11,7 @@ import Home  from "./pages/Home";
 import Default  from "./pages/Default";
 import Dashboard  from "./pages/Dashboard";
 import Pelicula  from "./pages/admin/Pelicula";
+import Sala from "./pages/admin/Sala";
 import LoginAdminForm  from "./pages/admin/login/LoginAdminForm";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                 <Route exact path="/home" element={<MyProtectedComponent exact path="/home" allowedRoles={['admin', 'user']}><HomePage /></MyProtectedComponent>} />
                 <Route path="/admin" element={<MyProtectedComponent path="/admin" allowedRoles={['admin']} element={<LayoutAdmin />}></MyProtectedComponent>}>
                     <Route path="peliculas" element={<Pelicula/>} />
+                    <Route path="salas" element={<Sala/>} />
                 </Route>
             </Routes>
     );
