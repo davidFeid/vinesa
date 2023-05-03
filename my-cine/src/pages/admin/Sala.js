@@ -27,7 +27,7 @@ export default class Sala extends Component{
             visibleShow : false,
             visibleImage : false,
             sala : {
-                IdSala:null,
+                id_sala:null,
                 nombre:null,
                 tipo: null,
                 filas: null,
@@ -87,7 +87,7 @@ export default class Sala extends Component{
 
     save(){
         const { nombre,tipo,filas,butacasporfila} = this.save.sala;
-        if (!nombre || !tipo || !filas || !butacasporfila){
+        if ( !nombre || !tipo || !filas || !butacasporfila){
             this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, rellene todos los campos' });
             return; // Detenemos la ejecución del método save()
         }
@@ -125,9 +125,9 @@ export default class Sala extends Component{
     }
 
     delete() {
-        if (this.state.selectedSala && this.state.selectedSala.IdSala) {
+        if (this.state.selectedSala && this.state.selectedSala.id_sala) {
             if(window.confirm("¿Realmente desea eliminar el registro '"+ this.state.selectedSala.nombre +"' ?")){
-                this.salaService.delete(this.state.selectedSala.IdSala)
+                this.salaService.delete(this.state.selectedSala.id_sala)
                     .then(data => {
                         this.setState({
                             visible : false
@@ -151,7 +151,7 @@ export default class Sala extends Component{
                 <Panel header="Salas">
                     <DataTable value={this.state.salas} paginator={true} rows={10} rowsPerPageOptions={[5, 10, 25, 50]} removableSort  paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
                                currentPageReportTemplate="{first} to {last} of {totalRecords}" tableStyle={{ minWidth: '50rem' }} selectionMode={"single"} selection={this.state.selectedSala} onSelectionChange={e => this.setState({selectedSala: e.value, footer: this.footerEdit})}>
-                        <Column sortable filter field="IdSala" header="Id Sala"></Column>
+                        <Column sortable filter field="id_sala" header="Id Sala"></Column>
                         <Column sortable filter field="nombre" header="Nombre"></Column>
                         <Column sortable filter field="tipo" header="Tipos de Sala"></Column>
                         <Column sortable filter field="filas" header="Filas"></Column>
@@ -243,7 +243,7 @@ export default class Sala extends Component{
         this.setState({
             visible : true,
             sala : {
-                IdSala:null,
+                id_sala:null,
                 nombre:null,
                 tipo: null,
                 filas: null,
@@ -255,11 +255,11 @@ export default class Sala extends Component{
     }
 
     showEditDialog() {
-        if (this.state.selectedSala && this.state.selectedSala.IdSala) {
+        if (this.state.selectedSala && this.state.selectedSala.id_sala) {
             this.setState({
                 visible: true,
                 sala: {
-                    IdSala: this.state.selectedSala.IdSala,
+                    id_sala: this.state.selectedSala.id_sala,
                     nombre:this.state.selectedSala.nombre,
                     tipo: this.state.selectedSala.tipo,
                     filas: this.state.selectedSala.filas,
@@ -274,11 +274,11 @@ export default class Sala extends Component{
     }
 
     showShowDialog() {
-        if (this.state.selectedSala && this.state.selectedSala.IdSala) {
+        if (this.state.selectedSala && this.state.selectedSala.id_sala) {
             this.setState({
                 visibleShow: true,
                 sala: {
-                    IdSala: this.state.selectedSala.IdSala,
+                    id_sala: this.state.selectedSala.id_sala,
                     nombre:this.state.selectedSala.nombre,
                     tipo: this.state.selectedSala.tipo,
                     filas: this.state.selectedSala.filas,

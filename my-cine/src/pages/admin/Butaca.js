@@ -27,9 +27,9 @@ export default class Butaca extends Component{
             visibleShow : false,
             visibleImage : false,
             butaca : {
-                Id:null,
-                IdButaca:null,
-                IdSala: null,
+                id:null,
+                id_butaca:null,
+                id_sala: null,
                 fila: null,
                 columna:null,
                 estado:null
@@ -86,8 +86,8 @@ export default class Butaca extends Component{
     }
 
     save(){
-        const { IdButaca, IdSala, fila, columna} = this.save.butaca;
-        if (!IdButaca || !IdSala || !fila || !columna ){
+        const { id_butaca, id_sala, fila, columna} = this.save.butaca;
+        if (!id_butaca || !id_sala || !fila || !columna ){
             this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, rellene todos los campos' });
             return; // Detenemos la ejecución del método save()
         }
@@ -125,9 +125,9 @@ export default class Butaca extends Component{
     }
 
     delete() {
-        if (this.state.selectedButaca && this.state.selectedButaca.Id) {
+        if (this.state.selectedButaca && this.state.selectedButaca.id) {
             if(window.confirm("¿Realmente desea eliminar el registro '"+ this.state.selectedButaca.nombre +"' ?")){
-                this.butacaService.delete(this.state.selectedButaca.Id)
+                this.butacaService.delete(this.state.selectedButaca.id)
                     .then(data => {
                         this.setState({
                             visible : false
@@ -151,8 +151,8 @@ export default class Butaca extends Component{
                 <Panel header="Butacas">
                     <DataTable value={this.state.butacas} paginator={true} rows={10} rowsPerPageOptions={[5, 10, 25, 50]} removableSort  paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
                                currentPageReportTemplate="{first} to {last} of {totalRecords}" tableStyle={{ minWidth: '50rem' }} selectionMode={"single"} selection={this.state.selectedButaca} onSelectionChange={e => this.setState({selectedButaca: e.value, footer: this.footerEdit})}>
-                        <Column sortable filter field="IdButaca" header="Id de la Butaca"></Column>
-                        <Column sortable filter field="IdSala" header="Id Sala"></Column>
+                        <Column sortable filter field="id_butaca" header="Id de la Butaca"></Column>
+                        <Column sortable filter field="id_sala" header="Id Sala"></Column>
                         <Column sortable filter field="fila" header="Fila"></Column>
                         <Column sortable filter field="columna" header="Columna"></Column>
                         <Column sortable filter field="estado" header="Estado"></Column>
@@ -162,29 +162,29 @@ export default class Butaca extends Component{
                     <form id="butaca-form">
                         <br/>
                         <span className="p-float-label">
-                            <InputText value={this.state.butaca.IdButaca} style={{width: '100%'}} required id="IdButaca" onChange={(e) => {
+                            <InputText value={this.state.butaca.id_butaca} style={{width: '100%'}} required id="id_butaca" onChange={(e) => {
                                 let val = e.target.value;
                                 this.setState(prevState =>{
                                     let butaca = Object.assign({}, prevState.butaca);
-                                    butaca.IdButaca = val;
+                                    butaca.id_butaca = val;
                                     return { butaca };
                                 })}
                             }></InputText>
-                            <label htmlFor="IdButaca">Id de la Butaca</label>
+                            <label htmlFor="id_butaca">Id de la Butaca</label>
                         </span>
                         <br/>
 
                         <span className="p-float-label">
-                            <InputText value={this.state.butaca.IdSala} style={{width: '100%'}} id="IdSala" onChange={(e) => {
+                            <InputText value={this.state.butaca.id_sala} style={{width: '100%'}} id="id_sala" onChange={(e) => {
                                 let val = e.target.value;
                                 this.setState(prevState =>{
                                     let butaca = Object.assign({}, prevState.butaca);
-                                    butaca.IdSala = val;
+                                    butaca.id_sala = val;
 
                                     return { butaca };
                                 })}
                             }></InputText>
-                            <label htmlFor="IdSala">IdSala</label>
+                            <label htmlFor="id_sala">IdSala</label>
                         </span>
                         <br/>
 
@@ -220,10 +220,10 @@ export default class Butaca extends Component{
                 </Dialog>
                 <Dialog header="Mostrar Butaca" visible={this.state.visibleShow} style={{ width: '70%' }} modal={true} onHide={() => this.setState({visibleShow : false})}>
                     <Fieldset legend={this.state.butaca.titulo}>
-                        <label htmlFor="IdButaca"><b>Id de la Butaca:</b></label>
-                        <p id="IdButaca">{this.state.butaca.IdButaca}</p>
-                        <label htmlFor="IdSala"><b>Id Sala:</b></label>
-                        <p id="IdSala">{this.state.butaca.IdSala}</p>
+                        <label htmlFor="id_butaca"><b>Id de la Butaca:</b></label>
+                        <p id="id_butaca">{this.state.butaca.id_butaca}</p>
+                        <label htmlFor="id_sala"><b>Id Sala:</b></label>
+                        <p id="id_sala">{this.state.butaca.id_sala}</p>
                         <label htmlFor="fila"><b>Filas:</b></label>
                         <p id="fila">{this.state.butaca.fila}</p>
                         <label htmlFor="columna"><b>Columna:</b></label>
@@ -242,7 +242,7 @@ export default class Butaca extends Component{
         this.setState({
             visible : true,
             butaca : {
-                Id:null,
+                id:null,
                 IdButaca:null,
                 IdSala: null,
                 fila: null,
@@ -254,13 +254,13 @@ export default class Butaca extends Component{
     }
 
     showEditDialog() {
-        if (this.state.selectedButaca && this.state.selectedButaca.Id) {
+        if (this.state.selectedButaca && this.state.selectedButaca.id) {
             this.setState({
                 visible: true,
                 butaca: {
-                    Id:this.state.selectedButaca.Id,
-                    IdButaca:this.state.selectedButaca.IdButaca,
-                    IdSala: this.state.selectedButaca.IdSala,
+                    id:this.state.selectedButaca.id,
+                    id_butaca:this.state.selectedButaca.id_butaca,
+                    id_sala: this.state.selectedButaca.id_sala,
                     fila: this.state.selectedButaca.fila,
                     columna:this.state.selectedButaca.columna,
                     estado:this.state.selectedButaca.estado
@@ -273,16 +273,16 @@ export default class Butaca extends Component{
     }
 
     showShowDialog() {
-        if (this.state.selectedButaca && this.state.selectedButaca.Id) {
+        if (this.state.selectedButaca && this.state.selectedButaca.id) {
             this.setState({
                 visibleShow: true,
                 butaca: {
-                    Id: this.state.selectedButaca.Id,
-                    IdButaca: this.state.selectedButaca.IdButaca,
-                    IdSala: this.state.selectedButaca.IdSala,
+                    id:this.state.selectedButaca.id,
+                    id_butaca:this.state.selectedButaca.id_butaca,
+                    id_sala: this.state.selectedButaca.id_sala,
                     fila: this.state.selectedButaca.fila,
-                    columna: this.state.selectedButaca.columna,
-                    estado: this.state.selectedButaca.estado
+                    columna:this.state.selectedButaca.columna,
+                    estado:this.state.selectedButaca.estado
                 }
             });
         } else {

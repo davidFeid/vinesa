@@ -1,7 +1,5 @@
 package com.cinema.cine.Service.SalaServiceIMPL;
 
-import com.cinema.cine.Entity.Butaca;
-import com.cinema.cine.Entity.Pelicula;
 import com.cinema.cine.Entity.Sala;
 import com.cinema.cine.Repository.SalaRepo;
 import com.cinema.cine.Service.SalaService;
