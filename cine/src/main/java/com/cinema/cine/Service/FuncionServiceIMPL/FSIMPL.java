@@ -41,7 +41,7 @@ public class FSIMPL implements FuncionService {
     }
 
     @Override
-    public Funcion BiuscarFuncion(int id) { return this.repo.findById(id).get(); }
+    public Funcion BuscarFuncion(int id) { return this.repo.findById(id).get(); }
 
     @Override
     public void EliminarFuncion(int id) {

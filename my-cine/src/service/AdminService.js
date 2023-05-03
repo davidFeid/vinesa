@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export class AdminService{
-    baseUrl = `http://localhost:8080/CRUDRepo/`;
+    baseUrl = `http://localhost:8080/Admin/`;
 
     getById(admin){
         return axios.post(this.baseUrl + "LoginAdmin", admin)

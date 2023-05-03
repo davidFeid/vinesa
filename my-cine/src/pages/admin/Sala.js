@@ -12,7 +12,7 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { Fieldset } from 'primereact/fieldset';
-import { InputTextarea } from 'primereact/inputtextarea';
+
 
 import 'primereact/resources/themes/nova/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -82,11 +82,11 @@ export default class Sala extends Component{
         );
     }
     componentDidMount() {
-        this.salaService.getAll().then(data => this.setState({salas: data}));
+        this.salaService.getAll().then(data => this.setState({salas: data}))
     }
 
     save(){
-        const { nombre,tipo,filas,butacasporfila} = this.save.sala;
+        const { nombre,tipo,filas,butacasporfila} = this.state.sala;
         if ( !nombre || !tipo || !filas || !butacasporfila){
             this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, rellene todos los campos' });
             return; // Detenemos la ejecución del método save()
@@ -105,7 +105,7 @@ export default class Sala extends Component{
     }
 
     edit() {
-        const {nombre, tipo, filas, butacasporfila} = this.save.sala;
+        const {nombre, tipo, filas, butacasporfila} = this.state.sala;
         if (!nombre || !tipo || !filas || !butacasporfila) {
             this.toast.show({severity: 'warn', summary: 'Advertencia', detail: 'Por favor, rellene todos los campos'});
             return; // Detenemos la ejecución del método save()
@@ -133,7 +133,7 @@ export default class Sala extends Component{
                             visible : false
                         });
                         this.toast.show({ severity: 'success', summary: 'Éxito', detail: 'Formulario guardado exitosamente' });
-                        this.salaService.getAll().then(data => this.setState({sala: data}));
+                        this.salaService.getAll().then(data => this.setState({salas: data}));
                     })
                     .catch(error => {
                         this.toast.show({ severity: 'error', summary: 'Error', detail: 'Ocurrió un error al guardar la sala' });
@@ -204,7 +204,7 @@ export default class Sala extends Component{
                         <br/>
 
                         <span className="p-float-label">
-                            <InputTextarea value={this.state.sala.butacasporfila} style={{width: '100%'}} id="butacasporfila" onChange={(e) => {
+                            <InputText value={this.state.sala.butacasporfila} style={{width: '100%'}} id="butacasporfila" onChange={(e) => {
                                 let val = e.target.value;
                                 this.setState(prevState =>{
                                     let sala = Object.assign({}, prevState.sala);
@@ -212,8 +212,8 @@ export default class Sala extends Component{
 
                                     return { sala };
                                 })}
-                            }></InputTextarea>
-                            <label htmlFor="butacasporfila">Butacas por fila</label>
+                            }></InputText>
+                            <label htmlFor="butacasporfila">ButacasFila</label>
                         </span>
                         <br/>
 

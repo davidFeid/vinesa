@@ -1,7 +1,7 @@
 import axios from 'axios'
 export class PeliculaService{
 
-    baseUrl = `http://localhost:8080/CRUDRepo/`;
+    baseUrl = `http://localhost:8080/AdminPelicula/`;
 
     getAll(){
         return axios.get(this.baseUrl+'ConsultarPeliculas').then(res => res.data);

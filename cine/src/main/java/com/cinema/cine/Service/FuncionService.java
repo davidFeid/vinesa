@@ -12,7 +12,7 @@ public interface FuncionService {
 
     public Funcion ModificarFuncion(Funcion funcion,int id);
 
-    public Funcion BiuscarFuncion(int id);
+    public Funcion BuscarFuncion(int id);
 
     public void EliminarFuncion(int id);
 

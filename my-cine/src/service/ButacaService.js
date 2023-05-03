@@ -2,7 +2,7 @@ import axios  from "axios";
 import {renderToReadableStream} from "react-dom/server";
 
 export class ButacaService {
-    baseUrl = `http://localhost:8080/CRUDRepo/`;
+    baseUrl = `http://localhost:8080/AdminButaca/`;
     getAll(){
         return axios.get(this.baseUrl +"ConsultarButacas").then(res => res.data);
     }

@@ -86,7 +86,7 @@ export default class Butaca extends Component{
     }
 
     save(){
-        const { id_butaca, id_sala, fila, columna} = this.save.butaca;
+        const { id_butaca, id_sala, fila, columna} = this.state.butaca;
         if (!id_butaca || !id_sala || !fila || !columna ){
             this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, rellene todos los campos' });
             return; // Detenemos la ejecución del método save()
@@ -105,8 +105,8 @@ export default class Butaca extends Component{
     }
 
     edit() {
-        const { IdButaca, IdSala, fila, columna} = this.save.butaca;
-        if (!IdButaca || !IdSala || !fila || !columna ){
+        const { id_butaca, id_sala, fila, columna} = this.state.butaca;
+        if (!id_butaca || !id_sala || !fila || !columna ){
             this.toast.show({severity: 'warn', summary: 'Advertencia', detail: 'Por favor, rellene todos los campos'});
             return; // Detenemos la ejecución del método save()
         }
@@ -116,7 +116,7 @@ export default class Butaca extends Component{
                     visible: false
                 });
                 this.toast.show({severity: 'success', summary: 'Éxito', detail: 'Formulario guardado exitosamente'});
-                this.butacaService.getAll().then(data => this.setState({butaca : data}));
+                this.butacaService.getAll().then(data => this.setState({butacas : data}));
             })
             .catch(error => {
                 this.toast.show({severity: 'error', summary: 'Error', detail: 'Ocurrió un error al guardar la butaca'
@@ -203,7 +203,7 @@ export default class Butaca extends Component{
                         <br/>
 
                         <span className="p-float-label">
-                            <InputTextarea value={this.state.butaca.columna} style={{width: '100%'}} id="columna" onChange={(e) => {
+                            <InputText value={this.state.butaca.columna} style={{width: '100%'}} id="columna" onChange={(e) => {
                                 let val = e.target.value;
                                 this.setState(prevState =>{
                                     let butaca = Object.assign({}, prevState.butaca);
@@ -211,7 +211,7 @@ export default class Butaca extends Component{
 
                                     return { butaca };
                                 })}
-                            }></InputTextarea>
+                            }></InputText>
                             <label htmlFor="columna">Butacas por fila</label>
                         </span>
                         <br/>
