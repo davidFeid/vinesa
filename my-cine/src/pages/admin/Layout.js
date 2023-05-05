@@ -1,27 +1,43 @@
 import { Outlet, Link } from "react-router-dom";
+import { MegaMenu } from 'primereact/megamenu';
+import { InputText } from 'primereact/inputtext';
+
+// eslint-disable-next-line react-hooks/rules-of-hooks
+
 
 const LayoutAdmin = () =>{
+
+
+    const items = [
+        {
+            label: "Peliculas",
+            icon: "pi pi-fw pi-video",
+            url: "admin/peliculas"
+        },
+        {
+            label: "Salas",
+            icon: "pi pi-fw pi-ticket",
+            url: "/peliculas"
+        },
+        {
+            label: "Funciones",
+            icon: "pi pi-fw pi-calendar",
+            url: "/peliculas"
+        },
+        {
+            label: "Usuarios",
+            icon: "pi pi-fw pi-users",
+            url: "/peliculas"
+        },
+    ];
+
+    const start = <img alt="logo" src="https://primefaces.org/cdn/primereact/images/logo.png" height="40" className="mr-2"></img>;
+    const end = <InputText placeholder="Search" type="text" />;
+
     return <div>
-        <h1>Menu Admin</h1>
-        <nav>
-            <ul>
-                <li>
-                    <Link to="/">Home</Link>
-                </li>
-                <li>
-                    <Link to="/about">About</Link>
-                </li>
-                <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                </li>
-                <li>
-                    <Link to="/peliculas">Peliculas</Link>
-                </li>
-                <li>
-                    <Link to="/login-admin">Login Admin</Link>
-                </li>
-            </ul>
-        </nav>
+        <div className="card">
+            <MegaMenu model={items} orientation="horizontal" start={start} end={end} breakpoint="960px" />
+        </div>
         <hr />
         <Outlet />
     </div>;

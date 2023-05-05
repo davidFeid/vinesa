@@ -13,6 +13,8 @@ import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { Fieldset } from 'primereact/fieldset';
 import { InputTextarea } from 'primereact/inputtextarea';
+import { FileUpload } from 'primereact/fileupload';
+import { Image } from 'primereact/image';
 
 import 'primereact/resources/themes/nova/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -39,7 +41,9 @@ export default class Pelicula extends Component{
             },
             selectedPelicula : {
 
-            }
+            },
+            imageUpload : null,
+            formData:  new FormData()
         };
         this.items = [
             {
@@ -72,6 +76,7 @@ export default class Pelicula extends Component{
         this.save = this.save.bind(this);
         this.edit = this.edit.bind(this);
         this.delete = this.delete.bind(this);
+        this.onUpload = this.onUpload.bind(this);
         this.footerSave = (
             <div>
                 <Button type="submit" label="Guardar" icon="pi pi-check" onClick={this.save}/>
@@ -88,6 +93,10 @@ export default class Pelicula extends Component{
         this.peliculaService.getAll().then(data => this.setState({peliculas: data}));
     }
 
+    onUpload(){
+        this.toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
+    }
+
     save() {
         const { titulo, directores, actores, descripcion, genero, imagen, video } = this.state.pelicula;
         if (!titulo || !directores || !actores || !descripcion || !genero || !imagen || !video) { // Si faltan campos por rellenar
@@ -100,6 +109,16 @@ export default class Pelicula extends Component{
                     visible : false
                 });
                 this.toast.show({ severity: 'success', summary: 'Éxito', detail: 'Formulario guardado exitosamente' });
+                if(this.state.imageUpload != null){
+                    this.state.formData.append('image', this.state.imageUpload);
+                    this.peliculaService.uploadImage(this.state.formData,data.idPelicula)
+                        .then(data => {
+                            this.toast.show({ severity: 'success', summary: 'Éxito', detail: 'IMAGEN GOD' });
+                        })
+                        .catch(error => {
+                            this.toast.show({ severity: 'error', summary: 'Error', detail: 'Ocurrió un error al guardar la película' });
+                        });
+                }
                 this.peliculaService.getAll().then(data => this.setState({peliculas: data}));
             })
             .catch(error => {
@@ -119,6 +138,16 @@ export default class Pelicula extends Component{
                     visible : false
                 });
                 this.toast.show({ severity: 'success', summary: 'Éxito', detail: 'Formulario guardado exitosamente' });
+                if(this.state.imageUpload != null){
+                    this.state.formData.append('image', this.state.imageUpload);
+                    this.peliculaService.uploadImage(this.state.formData,data.idPelicula)
+                        .then(data => {
+                            this.toast.show({ severity: 'success', summary: 'Éxito', detail: 'IMAGEN GOD Editada' });
+                        })
+                        .catch(error => {
+                            this.toast.show({ severity: 'error', summary: 'Error', detail: 'Ocurrió un error al guardar la película' });
+                        });
+                }
                 this.peliculaService.getAll().then(data => this.setState({peliculas: data}));
             })
             .catch(error => {
@@ -159,102 +188,118 @@ export default class Pelicula extends Component{
                         <Column sortable filter field="directores" header="Directores"></Column>
                         <Column sortable filter field="actores" header="Actores"></Column>
                         <Column sortable filter field="genero" header="Genero"></Column>
-                        <Column sortable filter field="imagen" header="Imagen"></Column>
+                        <Column sortable filter field="imagen" header="Imagen" body={(rowData) => (
+                            <Image src={"http://localhost:8080/CRUDRepo/imagenPeliculaDownload/"+rowData.imagen} alt="Image" width="100" preview />
+                        )}></Column>
                         <Column sortable filter field="estado" header="Estado"></Column>
                     </DataTable>
                 </Panel>
                 <Dialog header="Crear Pelicula" visible={this.state.visible} style={{ width: '400px' }} footer={this.state.footer} modal={true} onHide={() => this.setState({visible : false})}>
-                    <form id="pelicula-form">
+                    <form id="pelicula-form" encType={"multipart/form-data"} onSubmit={this.save}>
                         <br/>
                         <span className="p-float-label">
-                        <InputText value={this.state.pelicula.titulo} style={{width: '100%'}} required id="titulo" onChange={(e) => {
-                            let val = e.target.value;
-                            this.setState(prevState =>{
-                                let pelicula = Object.assign({}, prevState.pelicula);
-                                pelicula.titulo = val;
-                                return { pelicula };
-                            })}
-                        }></InputText>
-                        <label htmlFor="titulo">Titulo</label>
-                    </span>
-                        <br/>
-                        <span className="p-float-label">
-                        <InputText value={this.state.pelicula.directores} style={{width: '100%'}} id="directores" onChange={(e) => {
-                            let val = e.target.value;
-                            this.setState(prevState =>{
-                                let pelicula = Object.assign({}, prevState.pelicula);
-                                pelicula.directores = val;
+                            <InputText value={this.state.pelicula.titulo} style={{width: '100%'}} required id="titulo" onChange={(e) => {
+                                let val = e.target.value;
+                                this.setState(prevState =>{
+                                    let pelicula = Object.assign({}, prevState.pelicula);
+                                    pelicula.titulo = val;
+                                    return { pelicula };
+                                })}
+                            }></InputText>
+                            <label htmlFor="titulo">Titulo</label>
+                        </span>
+                            <br/>
+                            <span className="p-float-label">
+                            <InputText value={this.state.pelicula.directores} style={{width: '100%'}} id="directores" onChange={(e) => {
+                                let val = e.target.value;
+                                this.setState(prevState =>{
+                                    let pelicula = Object.assign({}, prevState.pelicula);
+                                    pelicula.directores = val;
 
-                                return { pelicula };
-                            })}
-                        }></InputText>
-                        <label htmlFor="directores">Directores</label>
-                    </span>
-                        <br/>
-                        <span className="p-float-label">
-                        <InputText value={this.state.pelicula.actores} style={{width: '100%'}} id="actores" onChange={(e) => {
-                            let val = e.target.value;
-                            this.setState(prevState =>{
-                                let pelicula = Object.assign({}, prevState.pelicula);
-                                pelicula.actores = val;
+                                    return { pelicula };
+                                })}
+                            }></InputText>
+                            <label htmlFor="directores">Directores</label>
+                        </span>
+                            <br/>
+                            <span className="p-float-label">
+                            <InputText value={this.state.pelicula.actores} style={{width: '100%'}} id="actores" onChange={(e) => {
+                                let val = e.target.value;
+                                this.setState(prevState =>{
+                                    let pelicula = Object.assign({}, prevState.pelicula);
+                                    pelicula.actores = val;
 
-                                return { pelicula };
-                            })}
-                        }></InputText>
-                        <label htmlFor="actores">Actores</label>
-                    </span>
-                        <br/>
-                        <span className="p-float-label">
-                        <InputTextarea value={this.state.pelicula.descripcion} style={{width: '100%'}} id="descripcion" onChange={(e) => {
-                            let val = e.target.value;
-                            this.setState(prevState =>{
-                                let pelicula = Object.assign({}, prevState.pelicula);
-                                pelicula.descripcion = val;
+                                    return { pelicula };
+                                })}
+                            }></InputText>
+                            <label htmlFor="actores">Actores</label>
+                        </span>
+                            <br/>
+                            <span className="p-float-label">
+                            <InputTextarea value={this.state.pelicula.descripcion} style={{width: '100%'}} id="descripcion" onChange={(e) => {
+                                let val = e.target.value;
+                                this.setState(prevState =>{
+                                    let pelicula = Object.assign({}, prevState.pelicula);
+                                    pelicula.descripcion = val;
 
-                                return { pelicula };
-                            })}
-                        }></InputTextarea>
-                        <label htmlFor="descripcion">Descripcion</label>
-                    </span>
-                        <br/>
-                        <span className="p-float-label">
-                        <InputText value={this.state.pelicula.genero} style={{width: '100%'}} id="genero" onChange={(e) => {
-                            let val = e.target.value;
-                            this.setState(prevState =>{
-                                let pelicula = Object.assign({}, prevState.pelicula);
-                                pelicula.genero = val;
+                                    return { pelicula };
+                                })}
+                            }></InputTextarea>
+                            <label htmlFor="descripcion">Descripcion</label>
+                        </span>
+                            <br/>
+                            <span className="p-float-label">
+                            <InputText value={this.state.pelicula.genero} style={{width: '100%'}} id="genero" onChange={(e) => {
+                                let val = e.target.value;
+                                this.setState(prevState =>{
+                                    let pelicula = Object.assign({}, prevState.pelicula);
+                                    pelicula.genero = val;
 
-                                return { pelicula };
-                            })}
-                        }></InputText>
-                        <label htmlFor="genero">Genero</label>
-                    </span>
-                        <br/>
-                        <span className="p-float-label">
-                        <InputText value={this.state.pelicula.imagen} style={{width: '100%'}} id="imagen" onChange={(e) => {
-                            let val = e.target.value;
-                            this.setState(prevState =>{
-                                let pelicula = Object.assign({}, prevState.pelicula);
-                                pelicula.imagen = val;
+                                    return { pelicula };
+                                })}
+                            }></InputText>
+                            <label htmlFor="genero">Genero</label>
+                        </span>
+                            <br/>
+                            <span className="p-float-label">
+                            {/*<InputText value={this.state.pelicula.imagen} style={{width: '100%'}} id="imagen" onChange={(e) => {
+                                let val = e.target.value;
+                                this.setState(prevState =>{
+                                    let pelicula = Object.assign({}, prevState.pelicula);
+                                    pelicula.imagen = val;
 
-                                return { pelicula };
-                            })}
-                        }></InputText>
-                        <label htmlFor="imagen">Imagen</label>
-                    </span>
-                        <br/>
-                        <span className="p-float-label">
-                        <InputText value={this.state.pelicula.video} style={{width: '100%'}} id="video" onChange={(e) => {
-                            let val = e.target.value;
-                            this.setState(prevState =>{
-                                let pelicula = Object.assign({}, prevState.pelicula);
-                                pelicula.video = val;
+                                    return { pelicula };
+                                })}
+                            }></InputText>*/}
+                            <input type="file" id={"imagen"} name="image" onChange={(e) => {
+                                this.setState({imageUpload : e.target.files[0]});
+                                let val = e.target.files[0];
+                                this.setState(prevState =>{
+                                    let pelicula = Object.assign({}, prevState.pelicula);
+                                    if (typeof this.state.selectedPelicula !== 'undefined') {
+                                        pelicula.imagen = this.state.selectedPelicula.idPelicula+"."+val.name.slice((val.name.lastIndexOf(".") - 1 >>> 0) + 2);
+                                    }else{
+                                        pelicula.imagen = val.name.slice((val.name.lastIndexOf(".") - 1 >>> 0) + 2);
+                                    }
+                                    return { pelicula };
+                                })
+                            }} />
+                            <label htmlFor="imagen">Imagen</label>
+                        </span>
+                            <br/>
+                            <span className="p-float-label">
+                            <InputText value={this.state.pelicula.video} style={{width: '100%'}} id="video" onChange={(e) => {
+                                let val = e.target.value;
+                                this.setState(prevState =>{
+                                    let pelicula = Object.assign({}, prevState.pelicula);
+                                    pelicula.video = val;
 
-                                return { pelicula };
-                            })}
-                        }></InputText>
-                        <label htmlFor="video">Video</label>
-                    </span>
+                                    return { pelicula };
+                                })}
+                            }></InputText>
+                            <label htmlFor="video">Video</label>
+                        </span>
+
                     </form>
                 </Dialog>
                 <Dialog header="Mostrar Pelicula" visible={this.state.visibleShow} style={{ width: '70%' }} modal={true} onHide={() => this.setState({visibleShow : false})}>
@@ -275,8 +320,7 @@ export default class Pelicula extends Component{
                 </Dialog>
                 <Dialog header="Mostrar Imagen" visible={this.state.visibleImage} style={{ width: '70%' }} modal={true} onHide={() => this.setState({visibleImage : false})}>
                     <Fieldset legend={this.state.pelicula.titulo}>
-                        <label htmlFor="imagen"><b>Imagen:</b></label>
-                        <p id="imagen">{this.state.pelicula.imagen}</p>
+                        <Image src={"http://localhost:8080/CRUDRepo/imagenPeliculaDownload/"+this.state.pelicula.imagen} id={"imagen"} alt="Image" width="500" preview />
                     </Fieldset>
                 </Dialog>
                 <Toast ref={(el) => this.toast = el} />

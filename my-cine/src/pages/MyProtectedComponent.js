@@ -1,5 +1,6 @@
 import React from 'react';
-import {Navigate, Outlet} from "react-router-dom";
+import {Link, Navigate, Outlet} from "react-router-dom";
+import LayoutAdmin  from "./admin/Layout";
 
 function MyProtectedComponent() {
     // Obtener la información del usuario del sessionStorage
@@ -16,7 +17,7 @@ function MyProtectedComponent() {
     }
 
     // Si el usuario está autenticado y tiene el rol adecuado, mostrar el componente protegido
-    return <Outlet />;
+    return <LayoutAdmin />
 }
 
 export default MyProtectedComponent;

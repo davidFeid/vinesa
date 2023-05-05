@@ -4,6 +4,7 @@ import React, {Component} from "react";
 import {AdminService} from "../../../service/AdminService";
 
 import { InputText } from 'primereact/inputtext';
+import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 
@@ -60,21 +61,26 @@ export default class LoginAdminForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit} className="login-form">
-                <h2>Iniciar sesión</h2>
-                <div className="p-fluid">
-                    <div className="p-field">
-                        <label htmlFor="username">Nombre de usuario</label>
-                        <InputText id="username" type="number" onChange={this.handleUsernameChange} />
+            <div className="p-fluid">
+                <form onSubmit={this.handleSubmit} className="login-form">
+                    <h2>Iniciar sesión</h2>
+                    <div className="p-fluid">
+                        <div className="p-field">
+                            <label htmlFor="username">ID de usuario</label>
+                            <InputText id="username" type="number" onChange={this.handleUsernameChange} />
+                        </div>
+                        <div className="p-field">
+                            <label htmlFor="password">Contraseña</label>
+                            <InputText id="password" type="password" onChange={this.handlePasswordChange} />
+                        </div>
+                        <Button type="submit" label="Iniciar sesión" />
                     </div>
-                    <div className="p-field">
-                        <label htmlFor="password">Contraseña</label>
-                        <InputText id="password" type="password" onChange={this.handlePasswordChange} />
-                    </div>
-                    <Button type="submit" label="Iniciar sesión" />
-                </div>
-                <Toast ref={(el) => this.toast = el} />
-            </form>
+                    <Toast ref={(el) => this.toast = el} />
+                </form>
+            </div>
+
+
+
         );
     }
 }
