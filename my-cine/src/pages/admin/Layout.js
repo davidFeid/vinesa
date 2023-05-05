@@ -1,6 +1,10 @@
 import { Outlet, Link } from "react-router-dom";
 import { MegaMenu } from 'primereact/megamenu';
+import { TabMenu } from 'primereact/tabmenu';
+import { Menubar } from 'primereact/menubar';
+import { TabView, TabPanel } from 'primereact/tabview';
 import { InputText } from 'primereact/inputtext';
+import React from "react";
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
@@ -12,22 +16,22 @@ const LayoutAdmin = () =>{
         {
             label: "Peliculas",
             icon: "pi pi-fw pi-video",
-            url: "admin/peliculas"
+            url: "/admin/peliculas"
         },
         {
             label: "Salas",
             icon: "pi pi-fw pi-ticket",
-            url: "/peliculas"
+            url: "/admin/salas"
         },
         {
             label: "Funciones",
             icon: "pi pi-fw pi-calendar",
-            url: "/peliculas"
+            url: "/admin/funciones"
         },
         {
             label: "Usuarios",
             icon: "pi pi-fw pi-users",
-            url: "/peliculas"
+            url: "/admin/usuarios"
         },
     ];
 
@@ -36,7 +40,7 @@ const LayoutAdmin = () =>{
 
     return <div>
         <div className="card">
-            <MegaMenu model={items} orientation="horizontal" start={start} end={end} breakpoint="960px" />
+                <Menubar model={items} orientation="horizontal" start={start} end={end} breakpoint="960px" ></Menubar>
         </div>
         <hr />
         <Outlet />

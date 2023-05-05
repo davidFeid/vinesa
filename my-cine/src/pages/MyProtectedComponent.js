@@ -4,7 +4,7 @@ import LayoutAdmin  from "./admin/Layout";
 
 function MyProtectedComponent() {
     // Obtener la información del usuario del sessionStorage
-    const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
     // Si el usuario no está autenticado, redirigirlo a la página de inicio de sesión
     if (!userInfo || !userInfo.authenticated) {

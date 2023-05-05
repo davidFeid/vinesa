@@ -51,11 +51,11 @@ export default class LoginAdminForm extends Component {
                     username: 'johndoe'
                 };
 
-                sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+                localStorage.setItem('userInfo', JSON.stringify(userInfo));
                 window.location.replace('/home');
             })
             .catch(error => {
-                this.toast.show({ severity: 'error', summary: 'Error', detail: 'Ocurrió un error al guardar la película' });
+                this.toast.show({ severity: 'error', summary: 'Error', detail: 'Ocurrió un error al intentar iniciar sesion' });
             });
     }
 

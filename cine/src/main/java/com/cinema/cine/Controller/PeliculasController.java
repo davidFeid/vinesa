@@ -2,10 +2,18 @@ package com.cinema.cine.Controller;
 
 import com.cinema.cine.Entity.Pelicula;
 import com.cinema.cine.Service.PeliculaServiceIMPL.PSIMPL;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RequestMapping("AdminPelicula")
@@ -30,7 +38,10 @@ public class PeliculasController {
     @RequestMapping(value = "CrearPeliculas", method = RequestMethod.POST)
     public ResponseEntity<?> CrearPeliculas(@RequestBody Pelicula pelicula){
         Pelicula PeliculaCreada = this.psimpl.CrearPelicula(pelicula);
-        return ResponseEntity.status(HttpStatus.CREATED).body(PeliculaCreada);
+        Pelicula EditarPelicula = this.psimpl.BuscarPelicula(PeliculaCreada.getIdPelicula());
+        EditarPelicula.setImagen(PeliculaCreada.getIdPelicula()+"."+PeliculaCreada.getImagen());
+        Pelicula PeliculaModificada = this.psimpl.ModificarPelicula(EditarPelicula,PeliculaCreada.getIdPelicula());
+        return ResponseEntity.status(HttpStatus.CREATED).body(PeliculaModificada);
     }
 
     @PutMapping
@@ -52,6 +63,32 @@ public class PeliculasController {
     public ResponseEntity<?> EliminarPelicula(@PathVariable int id){
         this.psimpl.EliminarPelicula(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping
+    @RequestMapping(value = "ImagenPeliculaUpload/{name}",method =RequestMethod.POST)
+    public ResponseEntity<?> imagenPeliculaUpload(@RequestParam("image") MultipartFile imagen, @PathVariable int name) {
+        // Aquí puedes hacer lo que quieras con la imagen. Por ejemplo, guardarla en el servidor.
+        try {
+            byte[] bytes = imagen.getBytes();
+            Path ruta = Paths.get("src/main/resources/images/" + name + "." + imagen.getOriginalFilename().substring(imagen.getOriginalFilename().lastIndexOf(".") + 1));
+            Files.write(ruta, bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok("Imagen subida con éxito");
+    }
+
+    @GetMapping
+    @RequestMapping(value = "imagenPeliculaDownload/{imageName}", method = RequestMethod.GET)
+    public ResponseEntity<Resource> getImage(@PathVariable String imageName) throws IOException {
+        Path imagePath = Paths.get("src/main/resources/images/" + imageName);
+        Resource resource = new UrlResource(imagePath.toUri());
+        if(resource.exists() && resource.isReadable()) {
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(resource);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 
