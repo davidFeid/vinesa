@@ -12,8 +12,11 @@ public class Funcion {
     private int Id_funcion;
     @Column(name = "Id_sala")
     private int Id_sala;
-    @Column(name = "Id_pelicula")
-    private int Id_pelicula;
+    @ManyToOne
+    @JoinColumn(name = "Id_pelicula")
+    private Pelicula pelicula;
+
+
     @Column(name = "Horario")
     private String Horario;
     @Column(name = "Fecha")
@@ -37,13 +40,14 @@ public class Funcion {
         Id_sala = id_sala;
     }
 
-    public int getId_pelicula() {
-        return Id_pelicula;
+    public Pelicula getPelicula() {
+        return pelicula;
     }
 
-    public void setId_pelicula(int id_pelicula) {
-        Id_pelicula = id_pelicula;
+    public void setPelicula(Pelicula pelicula) {
+        this.pelicula = pelicula;
     }
+
 
     public String getHorario() {
         return Horario;

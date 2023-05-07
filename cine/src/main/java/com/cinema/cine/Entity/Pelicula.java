@@ -2,6 +2,8 @@ package com.cinema.cine.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Table(name = "peliculas")
 @Entity
 public class Pelicula {
@@ -26,6 +28,19 @@ public class Pelicula {
     private String Video;
     @Column(name = "Estado")
     private int Estado;
+
+
+
+    @OneToMany(mappedBy = "pelicula")
+    private List<Funcion> funciones;
+
+    public List<Funcion> getFunciones() {
+        return funciones;
+    }
+
+    public void setFunciones(List<Funcion> funciones) {
+        this.funciones = funciones;
+    }
 
     public int getIdPelicula() {
         return IdPelicula;

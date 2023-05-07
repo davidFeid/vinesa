@@ -1,5 +1,7 @@
 import React, {Component} from "react";
+
 import {FuncionService} from "../../service/FuncionService";
+import {PeliculaService} from "../../service/PeliculaService";
 import {Button} from "primereact/button";
 import {Menubar} from "primereact/menubar";
 import {Panel} from "primereact/panel";
@@ -10,12 +12,27 @@ import {InputText} from "primereact/inputtext";
 import {InputTextarea} from "primereact/inputtextarea";
 import {Fieldset} from "primereact/fieldset";
 import {Toast} from "primereact/toast";
+import * as PropTypes from "prop-types";
+import { Dropdown } from "primereact/dropdown";
 
+import { CascadeSelect } from 'primereact/cascadeselect';
+
+
+function Label(props) {
+    return null;
+}
+
+Label.propTypes = {
+    for: PropTypes.string,
+    children: PropTypes.node
+};
 export default class Funcion extends Component{
     constructor() {
         super();
         this.state = {
             funciones:[],
+            peliculas:[],
+            peliculasOptions: [],
             visible : false,
             visibleShow : false,
             visibleImage : false,
@@ -28,7 +45,13 @@ export default class Funcion extends Component{
                 precio: null,
                 estado: null
             },
+            pelicula : {
+                idPelicula: null
+            },
             selectedFuncion : {
+
+            },
+            selectedPelicula : {
 
             }
         };
@@ -60,6 +83,7 @@ export default class Funcion extends Component{
             }
         ];
         this.funcionService = new FuncionService();
+        this.peliculaService = new PeliculaService();
         this.save = this.save.bind(this);
         this.edit = this.edit.bind(this);
         this.delete = this.delete.bind(this);
@@ -74,9 +98,18 @@ export default class Funcion extends Component{
             </div>
         );
     }
-    componentDidMount() {
+    async componentDidMount() {
         this.funcionService.getAll().then(data => this.setState({funciones: data}));
+        this.peliculaService.getAll().then(data => this.setState({peliculas: data}));
+
+
+        this.peliculaService.getAll().then((data) => {
+            this.setState({ peliculas: data, peliculasOptions: data.map((pelicula) => ({ value: pelicula.idPelicula })) });
+        });
+
     }
+
+
     save(){
         const { id_sala, id_pelicula,horario, fecha, precio, estado}=this.state.funcion;
         if(!id_sala || !id_pelicula || !horario || !fecha || !precio || !estado){
@@ -135,6 +168,7 @@ export default class Funcion extends Component{
     }
 
     render(){
+        console.log(this.state.peliculasOptions);
         return(
             <div style={{margin:'2em'}}>
                 <Menubar model={this.items}></Menubar>
@@ -169,15 +203,19 @@ export default class Funcion extends Component{
                     </span>
                         <br/>
                         <span className="p-float-label">
-                        <InputText value={this.state.funcion.id_pelicula} style={{width: '100%'}} id="id_pelicula" onChange={(e) => {
-                            let val = e.target.value;
-                            this.setState(prevState =>{
-                                let funcion = Object.assign({}, prevState.funcion);
-                                funcion.id_pelicula = val;
 
-                                return { funcion };
-                            })}
-                        }></InputText>
+                       <CascadeSelect
+                           value={this.state.selectedOption}
+                           onChange={(e) => this.setState({ selectedOption: e.value })}
+                           options={this.state.peliculasOptions.value} // Asegúrate de acceder al array de opciones correctamente
+                           optionLabel="cname"
+                           optionGroupLabel="name"
+                           optionGroupChildren={['states', 'cities']}
+                           className="w-full md:w-14rem"
+                           breakpoint="767px"
+                           placeholder="Select a City"
+                       />
+
                         <label htmlFor="id_pelicula">Id Pelicula</label>
                     </span>
                         <br/>
@@ -220,18 +258,7 @@ export default class Funcion extends Component{
                         <label htmlFor="precio">Precio</label>
                     </span>
                         <br/>
-                        <span className="p-float-label">
-                        <InputText value={this.state.funcion.estado} style={{width: '100%'}} id="estado" onChange={(e) => {
-                            let val = e.target.value;
-                            this.setState(prevState =>{
-                                let funcion = Object.assign({}, prevState.funcion);
-                                funcion.estado = val;
 
-                                return { funcion };
-                            })}
-                        }></InputText>
-                        <label htmlFor="estado">Estado</label>
-                    </span>
                     </form>
                 </Dialog>
                 <Dialog header="Mostrar Funcion" visible={this.state.visibleShow} style={{ width: '70%' }} modal={true} onHide={() => this.setState({visibleShow : false})}>
@@ -266,6 +293,9 @@ export default class Funcion extends Component{
                 precio: null,
                 estado: null
             },
+            pelicula : {
+                idPelicula: null
+            },
             footer: this.footerSave
         });
     }
@@ -283,8 +313,13 @@ export default class Funcion extends Component{
                     precio: this.state.selectedFuncion.precio,
                     estado: this.state.selectedFuncion.estado
                 },
+                pelicula: {
+                    idPelicula: this.state.selectedPelicula.idPelicula,
+
+                },
                 footer: this.footerEdit
             });
+
         } else {
             this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, seleccione una película' });
         }
@@ -302,8 +337,13 @@ export default class Funcion extends Component{
                     fecha: this.state.selectedFuncion.fecha,
                     precio: this.state.selectedFuncion.precio,
                     estado: this.state.selectedFuncion.estado
+                },
+                pelicula: {
+                    idPelicula: this.state.selectedPelicula.idPelicula,
+
                 }
             });
+
         } else {
             this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, seleccione una funcion' });
         }
