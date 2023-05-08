@@ -29,7 +29,7 @@ public class FSIMPL implements FuncionService {
       Funcion funcionExistente = this.repo.findById(id).orElse(null);
       if(funcionExistente != null){
           funcionExistente.setId_funcion(funcion.getId_funcion());
-          funcionExistente.setId_sala(funcion.getId_sala());
+          funcionExistente.setSala(funcion.getSala());
           funcionExistente.setPelicula(funcion.getPelicula());
           funcionExistente.setHorario(funcion.getHorario());
           funcionExistente.setFecha(funcion.getFecha());

@@ -10,8 +10,11 @@ public class Funcion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_funcion")
     private int Id_funcion;
-    @Column(name = "Id_sala")
-    private int Id_sala;
+
+    @ManyToOne
+    @JoinColumn(name = "Id_sala")
+    private Sala sala;
+
     @ManyToOne
     @JoinColumn(name = "Id_pelicula")
     private Pelicula pelicula;
@@ -33,12 +36,12 @@ public class Funcion {
         Id_funcion = id_funcion;
     }
 
-    public int getId_sala() {
-        return Id_sala;
+    public Sala getSala() {
+        return sala;
     }
 
-    public void setId_sala(int id_sala) {
-        Id_sala = id_sala;
+    public void setSala(Sala sala) {
+        this.sala = sala;
     }
 
     public Pelicula getPelicula() {

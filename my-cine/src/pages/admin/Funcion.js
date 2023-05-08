@@ -2,6 +2,7 @@ import React, {Component} from "react";
 
 import {FuncionService} from "../../service/FuncionService";
 import {PeliculaService} from "../../service/PeliculaService";
+import {SalaService} from "../../service/SalaService";
 import {Button} from "primereact/button";
 import {Menubar} from "primereact/menubar";
 import {Panel} from "primereact/panel";
@@ -14,8 +15,9 @@ import {Fieldset} from "primereact/fieldset";
 import {Toast} from "primereact/toast";
 import * as PropTypes from "prop-types";
 import { Dropdown } from "primereact/dropdown";
-
+import { InputNumber } from 'primereact/inputnumber';
 import { CascadeSelect } from 'primereact/cascadeselect';
+import {Calendar} from "primereact/calendar";
 
 
 function Label(props) {
@@ -33,7 +35,7 @@ export default class Funcion extends Component{
         this.state = {
             funciones:[],
             peliculas:[],
-            peliculasOptions: [],
+            salas:[],
             visible : false,
             visibleShow : false,
             visibleImage : false,
@@ -47,7 +49,10 @@ export default class Funcion extends Component{
                 estado: null
             },
             pelicula : {
-                tutitulo: ''
+
+            },
+            sala : {
+
             },
             selectedFuncion : {
 
@@ -86,6 +91,7 @@ export default class Funcion extends Component{
         ];
         this.funcionService = new FuncionService();
         this.peliculaService = new PeliculaService();
+        this.salaService = new SalaService();
         this.save = this.save.bind(this);
         this.edit = this.edit.bind(this);
         this.delete = this.delete.bind(this);
@@ -103,13 +109,14 @@ export default class Funcion extends Component{
     async componentDidMount() {
         this.funcionService.getAll().then(data => this.setState({funciones: data}));
         this.peliculaService.getAll().then(data => this.setState({peliculas: data}));
+        this.salaService.getAll().then(data => this.setState({salas: data}));
 
     }
 
 
     save(){
-        const { id_sala, id_pelicula,horario, fecha, precio, estado}=this.state.funcion;
-        if(!id_sala || !id_pelicula || !horario || !fecha || !precio || !estado){
+        const { id_sala, id_pelicula,horario, fecha, precio}=this.state.funcion;
+        if(!id_sala || !id_pelicula || !horario || !fecha || !precio ){
             this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, rellene todos los campos' });
             return;
         }
@@ -127,8 +134,8 @@ export default class Funcion extends Component{
     }
 
     edit(){
-        const { id_sala, id_pelicula,horario, fecha, precio, estado}=this.state.funcion;
-        if(!id_sala || !id_pelicula || !horario || !fecha || !precio || !estado){
+        const { id_sala, id_pelicula,horario, fecha, precio}=this.state.funcion;
+        if(!id_sala || !id_pelicula || !horario || !fecha || !precio){
             this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, rellene todos los campos' });
             return; // Detenemos la ejecución del método save()
         }
@@ -187,15 +194,16 @@ export default class Funcion extends Component{
                     <form id="funcion-form">
                         <br/>
                         <span className="p-float-label">
-                        <InputText value={this.state.funcion.id_sala} style={{width: '100%'}} required id="id_sala" onChange={(e) => {
-                            console.log(this.state.funcion);
-                            let val = e.target.value;
-                            this.setState(prevState =>{
-                                let funcion = Object.assign({}, prevState.funcion);
-                                funcion.id_sala = val;
-                                return { funcion };
-                            })}
-                        }></InputText>
+                         <Dropdown value={this.state.funcion.id_sala} onChange={(e) => {
+                             let val = e.target.value.id_sala;
+
+                             this.setState(prevState =>{
+                                 let funcion = Object.assign({}, prevState.funcion);
+                                 funcion.id_sala = val;
+                                 return { funcion };
+                             })
+                         }} options={this.state.salas} optionLabel="nombre"
+                                   editable placeholder="Selecciona la Sala" className="w-full md:w-14rem" />
                         <label htmlFor="id_sala">Id Sala</label>
                     </span>
                         <br/>
@@ -209,24 +217,23 @@ export default class Funcion extends Component{
                                     return { funcion };
                                 })
                             }} options={this.state.peliculas} optionLabel="titulo"
-                                      editable placeholder="Select a City" className="w-full md:w-14rem" />
+                                      editable placeholder="Seleccciona la Pelicula" className="w-full md:w-14rem" />
                         </div>
                         <br/>
                         <span className="p-float-label">
-                        <InputText value={this.state.funcion.horario} style={{width: '100%'}} id="horario" onChange={(e) => {
-                            let val = e.target.value;
-                            this.setState(prevState =>{
-                                let funcion = Object.assign({}, prevState.funcion);
-                                funcion.horario = val;
-
-                                return { funcion };
-                            })}
-                        }></InputText>
+                         <Calendar value={this.state.funcion.horario} id="horario" onChange={(e) => {
+                             let val = e.target.value;
+                             this.setState(prevState =>{
+                                 let funcion = Object.assign({}, prevState.funcion);
+                                 funcion.horario = val;
+                                 return { funcion };
+                             })}
+                         } timeOnly ></Calendar>
                         <label htmlFor="horario">Horario</label>
                     </span>
                         <br/>
                         <span className="p-float-label">
-                        <InputTextarea value={this.state.funcion.fecha} style={{width: '100%'}} id="fecha" onChange={(e) => {
+                        <Calendar value={this.state.funcion.fecha} id="fecha" onChange={(e) => {
                             let val = e.target.value;
                             this.setState(prevState =>{
                                 let funcion = Object.assign({}, prevState.funcion);
@@ -234,7 +241,7 @@ export default class Funcion extends Component{
 
                                 return { funcion };
                             })}
-                        }></InputTextarea>
+                        }></Calendar>
                         <label htmlFor="fecha">Fecha</label>
                     </span>
                         <br/>
@@ -286,9 +293,6 @@ export default class Funcion extends Component{
                 precio: null,
                 estado: null
             },
-            pelicula : {
-                titulo: null
-            },
             footer: this.footerSave
         });
     }
@@ -306,10 +310,7 @@ export default class Funcion extends Component{
                     precio: this.state.selectedFuncion.precio,
                     estado: this.state.selectedFuncion.estado
                 },
-                pelicula: {
-                    titulo: this.state.selectedPelicula.titulo,
 
-                },
                 footer: this.footerEdit
             });
 
@@ -330,10 +331,6 @@ export default class Funcion extends Component{
                     fecha: this.state.selectedFuncion.fecha,
                     precio: this.state.selectedFuncion.precio,
                     estado: this.state.selectedFuncion.estado
-                },
-                pelicula: {
-                    titulo: this.state.selectedPelicula.titulo,
-
                 }
             });
 
