@@ -15,6 +15,7 @@ import Sala from "./pages/admin/Sala";
 import Butaca from "./pages/admin/Butaca";
 import LoginAdminForm  from "./pages/admin/login/LoginAdminForm";
 import Funcion from "./pages/admin/Funcion";
+import Usuario from "./pages/admin/Usuario";
 import Error404 from "./pages/Error404";
 
 
@@ -29,6 +30,7 @@ function App() {
                 <Route path="salas" element={<Sala/>} />
                 <Route path="butacas" element={<Butaca/>} />
                 <Route path="funciones" element={<Funcion/>} />
+                <Route path="usuarios" element={<Usuario/>} />
             </Route>
             <Route path="*" element={<Error404/>}/>
         </Routes>

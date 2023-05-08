@@ -26,8 +26,8 @@ public class Usuario {
     private String Ciudad;
     @Column(name = "Codigo_postal")
     private String Codigo_postal;
-    @Column(name = "Fehca_alta")
-    private String Fehca_alta;
+    @Column(name = "Fecha_alta")
+    private String Fecha_alta;
     @Column(name = "Tipo_usuario")
     private String Tipo_usuario;
     @Column(name ="imagen")
@@ -106,12 +106,12 @@ public class Usuario {
         Codigo_postal = codigo_postal;
     }
 
-    public String getFehca_alta() {
-        return Fehca_alta;
+    public String getFecha_alta() {
+        return Fecha_alta;
     }
 
-    public void setFehca_alta(String fehca_alta) {
-        Fehca_alta = fehca_alta;
+    public void setFecha_alta(String Fecha_alta) {
+        Fecha_alta = Fecha_alta;
     }
 
     public String getTipo_usuario() {

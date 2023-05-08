@@ -38,7 +38,7 @@ public class USIMPL implements UsuarioService {
             usuarioExistente.setDireccion(usuario.getDireccion());
             usuarioExistente.setCiudad(usuario.getCiudad());
             usuarioExistente.setCodigo_postal(usuario.getCodigo_postal());
-            usuarioExistente.setFehca_alta(usuario.getFehca_alta());
+            usuarioExistente.setFecha_alta(usuario.getFecha_alta());
             usuarioExistente.setTipo_usuario(usuario.getTipo_usuario());
             usuarioExistente.setEstado(usuario.getEstado());
 

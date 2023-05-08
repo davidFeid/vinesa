@@ -104,11 +104,6 @@ export default class Funcion extends Component{
         this.funcionService.getAll().then(data => this.setState({funciones: data}));
         this.peliculaService.getAll().then(data => this.setState({peliculas: data}));
 
-
-        this.peliculaService.getAll().then((data) => {
-            this.setState({ peliculas: data, peliculasOptions: data.map((pelicula) => ({ value: pelicula.titulo })) });
-        });
-
     }
 
 
@@ -170,11 +165,6 @@ export default class Funcion extends Component{
     }
 
     render(){
-        const elementos = this.state.peliculasOptions.map((index) => (
-        <option value={index.value}>{index.value}</option>
-        ));
-
-       //console.log(this.state.peliculasOptions);
         return(
             <div style={{margin:'2em'}}>
                 <Menubar model={this.items}></Menubar>
@@ -198,6 +188,7 @@ export default class Funcion extends Component{
                         <br/>
                         <span className="p-float-label">
                         <InputText value={this.state.funcion.id_sala} style={{width: '100%'}} required id="id_sala" onChange={(e) => {
+                            console.log(this.state.funcion);
                             let val = e.target.value;
                             this.setState(prevState =>{
                                 let funcion = Object.assign({}, prevState.funcion);
@@ -208,12 +199,18 @@ export default class Funcion extends Component{
                         <label htmlFor="id_sala">Id Sala</label>
                     </span>
                         <br/>
-                        <span className="p-float-label">
-                            <select name={"prueba"}>
-                                {elementos}
-                            </select>
-                        <label htmlFor="id_pelicula">Id Pelicula</label>
-                    </span>
+                        <div className="card flex justify-content-center">
+                            <Dropdown value={this.state.funcion.id_pelicula} onChange={(e) => {
+                                let val = e.target.value.idPelicula;
+
+                                this.setState(prevState =>{
+                                    let funcion = Object.assign({}, prevState.funcion);
+                                    funcion.id_pelicula = val;
+                                    return { funcion };
+                                })
+                            }} options={this.state.peliculas} optionLabel="titulo"
+                                      editable placeholder="Select a City" className="w-full md:w-14rem" />
+                        </div>
                         <br/>
                         <span className="p-float-label">
                         <InputText value={this.state.funcion.horario} style={{width: '100%'}} id="horario" onChange={(e) => {

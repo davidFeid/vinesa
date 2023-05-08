@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("Usuario")
+@RequestMapping("AdminUsuario")
 @RestController
 @CrossOrigin("*")
 public class UsuariosController {
