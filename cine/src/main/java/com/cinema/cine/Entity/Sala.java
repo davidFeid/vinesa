@@ -2,6 +2,8 @@ package com.cinema.cine.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "salas")
 public class Sala {
@@ -20,6 +22,7 @@ public class Sala {
     private int Butacasporfila;
     @Column(name= "Estado")
     private int Estado;
+
 
     public int getId_sala() {
         return Id_sala;

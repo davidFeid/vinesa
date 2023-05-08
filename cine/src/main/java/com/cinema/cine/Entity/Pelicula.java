@@ -30,18 +30,6 @@ public class Pelicula {
     private int Estado;
 
 
-
-    @OneToMany(mappedBy = "pelicula")
-    private List<Funcion> funciones;
-
-    public List<Funcion> getFunciones() {
-        return funciones;
-    }
-
-    public void setFunciones(List<Funcion> funciones) {
-        this.funciones = funciones;
-    }
-
     public int getIdPelicula() {
         return IdPelicula;
     }

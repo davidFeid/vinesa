@@ -10,14 +10,13 @@ import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Dialog} from "primereact/dialog";
 import {InputText} from "primereact/inputtext";
-import {InputTextarea} from "primereact/inputtextarea";
 import {Fieldset} from "primereact/fieldset";
 import {Toast} from "primereact/toast";
 import * as PropTypes from "prop-types";
 import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from 'primereact/inputnumber';
-import { CascadeSelect } from 'primereact/cascadeselect';
 import {Calendar} from "primereact/calendar";
+
 
 
 function Label(props) {
@@ -68,7 +67,7 @@ export default class Funcion extends Component{
                 icon : 'pi pi-fw pi-plus',
                 command : () => {this.showSaveDialog()}
             },
-            {
+            /*{
                 label : 'Editar',
                 icon : 'pi pi-fw pi-pencil',
                 command : () => {this.showEditDialog()}
@@ -78,7 +77,7 @@ export default class Funcion extends Component{
                 icon : 'pi pi-fw pi-eye',
                 command : () => {this.showShowDialog()}
             },
-            /*{
+            {
                 label : 'Mostrar Imagen',
                 icon : 'pi pi-fw pi-image',
                 command : () => {this.showImageDialog()}
@@ -100,11 +99,11 @@ export default class Funcion extends Component{
                 <Button type="submit" label="Guardar" icon="pi pi-check" onClick={this.save}/>
             </div>
         );
-        this.footerEdit = (
-            <div>
-                <Button type="submit" label="Editar" icon="pi pi-check" onClick={this.edit}/>
-            </div>
-        );
+        // this.footerEdit = (
+        //     <div>
+        //         <Button type="submit" label="Editar" icon="pi pi-check" onClick={this.edit}/>
+        //     </div>
+        // );
     }
     async componentDidMount() {
         this.funcionService.getAll().then(data => this.setState({funciones: data}));
@@ -120,7 +119,11 @@ export default class Funcion extends Component{
             this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, rellene todos los campos' });
             return;
         }
-        this.funcionService.save(this.state.funcion)
+        const formattedFecha = fecha.toISOString().split('T')[0];
+
+        const formattedHorario = horario.toISOString().split('T')[1].split('.')[0];
+        this.funcionService.save({...this.state.funcion, fecha: formattedFecha, horario: formattedHorario} )
+
             .then(data => {
                 this.setState({
                     visible : false
@@ -133,7 +136,7 @@ export default class Funcion extends Component{
             });
     }
 
-    edit(){
+   edit(){
         const { id_sala, id_pelicula,horario, fecha, precio}=this.state.funcion;
         if(!id_sala || !id_pelicula || !horario || !fecha || !precio){
             this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, rellene todos los campos' });
@@ -151,6 +154,7 @@ export default class Funcion extends Component{
                 this.toast.show({ severity: 'error', summary: 'Error', detail: 'Ocurrió un error al guardar la funcion' });
             });
     }
+
     delete() {
         if (this.state.selectedFuncion && this.state.selectedFuncion.id_funcion) {
             if(window.confirm("¿Realmente desea eliminar el registro '"+ this.state.selectedFuncion.id_funcion +"' ?")){
@@ -194,7 +198,7 @@ export default class Funcion extends Component{
                     <form id="funcion-form">
                         <br/>
                         <span className="p-float-label">
-                         <Dropdown value={this.state.funcion.id_sala} onChange={(e) => {
+                         <Dropdown value={this.state.funcion.id_sala}  style={{width: '100%'}} onChange={(e) => {
                              let val = e.target.value.id_sala;
 
                              this.setState(prevState =>{
@@ -208,7 +212,7 @@ export default class Funcion extends Component{
                     </span>
                         <br/>
                         <div className="card flex justify-content-center">
-                            <Dropdown value={this.state.funcion.id_pelicula} onChange={(e) => {
+                            <Dropdown value={this.state.funcion.id_pelicula} style={{width: '100%'}} onChange={(e) => {
                                 let val = e.target.value.idPelicula;
 
                                 this.setState(prevState =>{
@@ -221,7 +225,20 @@ export default class Funcion extends Component{
                         </div>
                         <br/>
                         <span className="p-float-label">
-                         <Calendar value={this.state.funcion.horario} id="horario" onChange={(e) => {
+                        <Calendar value={this.state.funcion.fecha} style={{width: '100%'}} id="fecha"   onChange={(e) => {
+                            let val = e.target.value;
+                            this.setState(prevState =>{
+                                let funcion = Object.assign({}, prevState.funcion);
+                                funcion.fecha = val;
+                                console.log(funcion);
+                                return { funcion };
+                            })}
+                        } dateFormat="dd/mm/yy"></Calendar>
+                        <label htmlFor="fecha">Fecha</label>
+                    </span>
+                        <br/>
+                        <span className="p-float-label">
+                         <Calendar value={this.state.funcion.horario} style={{width: '100%'}} id="horario" onChange={(e) => {
                              let val = e.target.value;
                              this.setState(prevState =>{
                                  let funcion = Object.assign({}, prevState.funcion);
@@ -232,21 +249,9 @@ export default class Funcion extends Component{
                         <label htmlFor="horario">Horario</label>
                     </span>
                         <br/>
-                        <span className="p-float-label">
-                        <Calendar value={this.state.funcion.fecha} id="fecha" onChange={(e) => {
-                            let val = e.target.value;
-                            this.setState(prevState =>{
-                                let funcion = Object.assign({}, prevState.funcion);
-                                funcion.fecha = val;
 
-                                return { funcion };
-                            })}
-                        }></Calendar>
-                        <label htmlFor="fecha">Fecha</label>
-                    </span>
-                        <br/>
                         <span className="p-float-label">
-                        <InputText value={this.state.funcion.precio} style={{width: '100%'}} id="precio" onChange={(e) => {
+                        <InputNumber  value={this.state.funcion.precio} style={{width: '100%'}} id="precio" onValueChange={(e) => {
                             let val = e.target.value;
                             this.setState(prevState =>{
                                 let funcion = Object.assign({}, prevState.funcion);
@@ -254,7 +259,7 @@ export default class Funcion extends Component{
 
                                 return { funcion };
                             })}
-                        }></InputText>
+                        }></InputNumber>
                         <label htmlFor="precio">Precio</label>
                     </span>
                         <br/>

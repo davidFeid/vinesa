@@ -11,13 +11,11 @@ public class Funcion {
     @Column(name = "Id_funcion")
     private int Id_funcion;
 
-    @ManyToOne
-    @JoinColumn(name = "Id_sala")
-    private Sala sala;
+    @Column(name = "Id_sala")
+    private int Id_sala;
 
-    @ManyToOne
-    @JoinColumn(name = "Id_pelicula")
-    private Pelicula pelicula;
+    @Column(name = "Id_pelicula")
+    private int Id_pelicula;
     @Column(name = "Estado")
     private int Estado;
 
@@ -36,22 +34,21 @@ public class Funcion {
         Id_funcion = id_funcion;
     }
 
-    public Sala getSala() {
-        return sala;
+    public int getId_sala() {
+        return Id_sala;
     }
 
-    public void setSala(Sala sala) {
-        this.sala = sala;
+    public void setId_sala(int id_sala) {
+        Id_sala = id_sala;
     }
 
-    public Pelicula getPelicula() {
-        return pelicula;
+    public int getId_pelicula() {
+        return Id_pelicula;
     }
 
-    public void setPelicula(Pelicula pelicula) {
-        this.pelicula = pelicula;
+    public void setId_pelicula(int id_pelicula) {
+        Id_pelicula = id_pelicula;
     }
-
 
     public String getHorario() {
         return Horario;
