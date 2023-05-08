@@ -15,7 +15,8 @@ public class Funcion {
     @ManyToOne
     @JoinColumn(name = "Id_pelicula")
     private Pelicula pelicula;
-
+    @Column(name = "Estado")
+    private int Estado;
 
     @Column(name = "Horario")
     private String Horario;
@@ -81,6 +82,5 @@ public class Funcion {
         Estado = estado;
     }
 
-    @Column(name = "Estado")
-    private int Estado;
+
 }

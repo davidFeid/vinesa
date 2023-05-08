@@ -27,6 +27,7 @@ Label.propTypes = {
     children: PropTypes.node
 };
 export default class Funcion extends Component{
+
     constructor() {
         super();
         this.state = {
@@ -46,7 +47,7 @@ export default class Funcion extends Component{
                 estado: null
             },
             pelicula : {
-                idPelicula: null
+                tutitulo: ''
             },
             selectedFuncion : {
 
@@ -54,6 +55,7 @@ export default class Funcion extends Component{
             selectedPelicula : {
 
             }
+
         };
         this.items = [
             {
@@ -104,7 +106,7 @@ export default class Funcion extends Component{
 
 
         this.peliculaService.getAll().then((data) => {
-            this.setState({ peliculas: data, peliculasOptions: data.map((pelicula) => ({ value: pelicula.idPelicula })) });
+            this.setState({ peliculas: data, peliculasOptions: data.map((pelicula) => ({ value: pelicula.titulo })) });
         });
 
     }
@@ -168,7 +170,11 @@ export default class Funcion extends Component{
     }
 
     render(){
-        console.log(this.state.peliculasOptions);
+        const elementos = this.state.peliculasOptions.map((index) => (
+        <option value={index.value}>{index.value}</option>
+        ));
+
+       //console.log(this.state.peliculasOptions);
         return(
             <div style={{margin:'2em'}}>
                 <Menubar model={this.items}></Menubar>
@@ -203,19 +209,9 @@ export default class Funcion extends Component{
                     </span>
                         <br/>
                         <span className="p-float-label">
-
-                       <CascadeSelect
-                           value={this.state.selectedOption}
-                           onChange={(e) => this.setState({ selectedOption: e.value })}
-                           options={this.state.peliculasOptions.value} // Asegúrate de acceder al array de opciones correctamente
-                           optionLabel="cname"
-                           optionGroupLabel="name"
-                           optionGroupChildren={['states', 'cities']}
-                           className="w-full md:w-14rem"
-                           breakpoint="767px"
-                           placeholder="Select a City"
-                       />
-
+                            <select name={"prueba"}>
+                                {elementos}
+                            </select>
                         <label htmlFor="id_pelicula">Id Pelicula</label>
                     </span>
                         <br/>
@@ -294,7 +290,7 @@ export default class Funcion extends Component{
                 estado: null
             },
             pelicula : {
-                idPelicula: null
+                titulo: null
             },
             footer: this.footerSave
         });
@@ -314,7 +310,7 @@ export default class Funcion extends Component{
                     estado: this.state.selectedFuncion.estado
                 },
                 pelicula: {
-                    idPelicula: this.state.selectedPelicula.idPelicula,
+                    titulo: this.state.selectedPelicula.titulo,
 
                 },
                 footer: this.footerEdit
@@ -339,7 +335,7 @@ export default class Funcion extends Component{
                     estado: this.state.selectedFuncion.estado
                 },
                 pelicula: {
-                    idPelicula: this.state.selectedPelicula.idPelicula,
+                    titulo: this.state.selectedPelicula.titulo,
 
                 }
             });
