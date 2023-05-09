@@ -61,25 +61,37 @@ export default class LoginAdminForm extends Component {
 
     render() {
         return (
-            <div className="p-fluid">
-                <form onSubmit={this.handleSubmit} className="login-form">
-                    <h2>Iniciar sesión</h2>
-                    <div className="p-fluid">
-                        <div className="p-field">
-                            <label htmlFor="username">ID de usuario</label>
-                            <InputText id="username" type="number" onChange={this.handleUsernameChange} />
+        <div className="container">
+            <div className="screen">
+                <div className="screenContent">
+                    <form onSubmit={this.handleSubmit} className="login">
+                        <h2 className="loginAdmin">Login Admin</h2>
+                        <div className="loginField">
+                            <i className="pi pi-user" style={{ fontSize: '1rem' }}></i>
+                            <label htmlFor="username"> Id Admin</label>
+                            <InputText  class="loginInput" id="username" type="number" onChange={this.handleUsernameChange} />
                         </div>
-                        <div className="p-field">
-                            <label htmlFor="password">Contraseña</label>
-                            <InputText id="password" type="password" onChange={this.handlePasswordChange} />
+                        <div className="loginField">
+                            <i className="pi pi-lock" style={{ fontSize: '1rem' }}></i>
+                            <label htmlFor="password"> Contraseña</label>
+                            <InputText  class="loginInput" id="password" type="password" onChange={this.handlePasswordChange} />
                         </div>
-                        <Button type="submit" label="Iniciar sesión" />
-                    </div>
-                    <Toast ref={(el) => this.toast = el} />
-                </form>
+                        <button type="submit"  class="button login__submit">
+                            <span className="button__text">Log In Admin</span>
+                            <i className="button__icon fas fa-chevron-right"></i>
+                        </button>
+
+                        <Toast ref={(el) => this.toast = el} />
+                    </form>
+                </div>
+                <div className="screen__background">
+                    <span className="screen__background__shape screen__background__shape4"></span>
+                    <span className="screen__background__shape screen__background__shape3"></span>
+                    <span className="screen__background__shape screen__background__shape2"></span>
+                    <span className="screen__background__shape screen__background__shape1"></span>
+                </div>
             </div>
-
-
+        </div>
 
         );
     }

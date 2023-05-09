@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-
 import {FuncionService} from "../../service/FuncionService";
 import {PeliculaService} from "../../service/PeliculaService";
 import {SalaService} from "../../service/SalaService";
@@ -124,6 +123,11 @@ export default class Funcion extends Component{
             return;
         }
 
+        const currentDate = new Date();
+        if (fecha < currentDate) {
+            this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'La fecha debe ser igual o superior a la fecha actual' });
+            return;
+        }
         const formattedFecha = fecha.toISOString().split('T')[0];
         const formattedHorario = horario.toISOString().split('T')[1].split('.')[0];
 
@@ -262,7 +266,9 @@ export default class Funcion extends Component{
 
                                 return { funcion };
                             })}
-                        }></InputNumber>
+                            } min={0} max={10}>
+
+                        </InputNumber>
                         <label htmlFor="precio">Precio</label>
                     </span>
                         <br/>

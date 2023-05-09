@@ -29,7 +29,6 @@ export default class Sala extends Component{
             sala : {
                 id_sala:null,
                 nombre:null,
-                tipo: null,
                 filas: null,
                 butacasporfila:null,
                 estado:null
@@ -86,8 +85,8 @@ export default class Sala extends Component{
     }
 
     save(){
-        const { nombre,tipo,filas,butacasporfila} = this.state.sala;
-        if ( !nombre || !tipo || !filas || !butacasporfila){
+        const { nombre,filas,butacasporfila} = this.state.sala;
+        if ( !nombre || !filas || !butacasporfila){
             this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, rellene todos los campos' });
             return; // Detenemos la ejecución del método save()
         }
@@ -105,8 +104,8 @@ export default class Sala extends Component{
     }
 
     edit() {
-        const {nombre, tipo, filas, butacasporfila} = this.state.sala;
-        if (!nombre || !tipo || !filas || !butacasporfila) {
+        const {nombre, filas, butacasporfila} = this.state.sala;
+        if (!nombre || !filas || !butacasporfila) {
             this.toast.show({severity: 'warn', summary: 'Advertencia', detail: 'Por favor, rellene todos los campos'});
             return; // Detenemos la ejecución del método save()
         }
@@ -153,7 +152,6 @@ export default class Sala extends Component{
                                currentPageReportTemplate="{first} to {last} of {totalRecords}" tableStyle={{ minWidth: '50rem' }} selectionMode={"single"} selection={this.state.selectedSala} onSelectionChange={e => this.setState({selectedSala: e.value, footer: this.footerEdit})}>
                         <Column sortable filter field="id_sala" header="Id Sala"></Column>
                         <Column sortable filter field="nombre" header="Nombre"></Column>
-                        <Column sortable filter field="tipo" header="Tipos de Sala"></Column>
                         <Column sortable filter field="filas" header="Filas"></Column>
                         <Column sortable filter field="butacasporfila" header="Butacas por Fila"></Column>
                         <Column sortable filter field="estado" header="Estado"></Column>
@@ -175,19 +173,6 @@ export default class Sala extends Component{
                         </span>
                         <br/>
 
-                        <span className="p-float-label">
-                            <InputText value={this.state.sala.tipo} style={{width: '100%'}} id="tipo" onChange={(e) => {
-                                let val = e.target.value;
-                                this.setState(prevState =>{
-                                    let sala = Object.assign({}, prevState.sala);
-                                    sala.tipo = val;
-
-                                    return { sala };
-                                })}
-                            }></InputText>
-                            <label htmlFor="tipo">Tipo de salas</label>
-                        </span>
-                        <br/>
 
                         <span className="p-float-label">
                             <InputText value={this.state.sala.filas} style={{width: '100%'}} id="filas" onChange={(e) => {
@@ -223,8 +208,6 @@ export default class Sala extends Component{
                     <Fieldset legend={this.state.sala.titulo}>
                         <label htmlFor="nombre"><b>Nombre de la Sala:</b></label>
                         <p id="nombre">{this.state.sala.nombre}</p>
-                        <label htmlFor="tipo"><b>Tipo de Sala:</b></label>
-                        <p id="tipo">{this.state.sala.tipo}</p>
                         <label htmlFor="filas"><b>Filas:</b></label>
                         <p id="filas">{this.state.sala.filas}</p>
                         <label htmlFor="butacasporfila"><b>butacas por fila:</b></label>
@@ -245,7 +228,6 @@ export default class Sala extends Component{
             sala : {
                 id_sala:null,
                 nombre:null,
-                tipo: null,
                 filas: null,
                 butacasporfila:null,
                 estado:null
@@ -261,7 +243,6 @@ export default class Sala extends Component{
                 sala: {
                     id_sala: this.state.selectedSala.id_sala,
                     nombre:this.state.selectedSala.nombre,
-                    tipo: this.state.selectedSala.tipo,
                     filas: this.state.selectedSala.filas,
                     butacasporfila: this.state.selectedSala.butacasporfila,
                     estado:this.state.selectedSala.estado
@@ -280,7 +261,6 @@ export default class Sala extends Component{
                 sala: {
                     id_sala: this.state.selectedSala.id_sala,
                     nombre:this.state.selectedSala.nombre,
-                    tipo: this.state.selectedSala.tipo,
                     filas: this.state.selectedSala.filas,
                     butacasporfila: this.state.selectedSala.butacasporfila,
                     estado:this.state.selectedSala.estado

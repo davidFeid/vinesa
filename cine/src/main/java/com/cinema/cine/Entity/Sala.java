@@ -12,8 +12,6 @@ public class Sala {
     private int Id_sala;
     @Column(name="Nombre")
     private String Nombre;
-    @Column(name="Tipo")
-    private  String Tipo;
     @Column(name="Filas")
     private int Filas;
     @Column(name = "Butacasporfila")
@@ -37,13 +35,6 @@ public class Sala {
         Nombre = nombre;
     }
 
-    public String getTipo() {
-        return Tipo;
-    }
-
-    public void setTipo(String tipo) {
-        Tipo = tipo;
-    }
 
     public int getFilas() {
         return Filas;

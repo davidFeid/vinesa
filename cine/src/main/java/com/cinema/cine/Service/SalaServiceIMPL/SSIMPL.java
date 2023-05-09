@@ -29,7 +29,6 @@ public class SSIMPL implements SalaService {
         if (salaExistente != null) {
             salaExistente.setId_sala(sala.getId_sala());
             salaExistente.setNombre(sala.getNombre());
-            salaExistente.setTipo(sala.getTipo());
             salaExistente.setFilas(sala.getFilas());
             salaExistente.setButacasporfila(sala.getButacasporfila());
             salaExistente.setEstado(sala.getEstado());

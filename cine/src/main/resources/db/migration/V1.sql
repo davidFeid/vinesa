@@ -162,7 +162,6 @@ DROP TABLE IF EXISTS `salas`;
 CREATE TABLE `salas` (
                          `Id_sala` int(11) NOT NULL,
                          `Nombre` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-                         `Tipo` set('Normal','VOSE','Sala Dolby','Dolby3D','D-BOX') DEFAULT NULL,
                          `Filas` int(11) DEFAULT NULL,
                          `Butacasporfila` int(11) DEFAULT NULL,
                          `Estado` int(11) DEFAULT 1
