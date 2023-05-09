@@ -16,7 +16,7 @@ public class PSIMPL implements PeliculaService {
 
     @Override
     public List<Pelicula> ConsultarPelicula() {
-        return (List<Pelicula>) this.repo.findAll();
+        return this.repo.findAll();
     }
 
     @Override
