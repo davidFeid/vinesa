@@ -1,11 +1,20 @@
 package com.cinema.cine.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.List;
 
+
 @Table(name = "peliculas")
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "idPelicula"
+)
 public class Pelicula {
 
     @Id
@@ -31,7 +40,7 @@ public class Pelicula {
 
 
 
-    @OneToMany(mappedBy = "peliculas")
+    @OneToMany(mappedBy = "pelicula")
     private List<Funcion> funciones;
 
     public List<Funcion> getFunciones() {
