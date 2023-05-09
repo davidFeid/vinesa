@@ -8,7 +8,7 @@ export class FuncionService{
     }
 
     save(funcion) {
-        return axios.post(this.baseUrl + "CrearFuncion", funcion)
+        return axios.post(this.baseUrl + "CrearFuncion/"+ funcion.id_sala + "/" + funcion.id_pelicula, funcion)
             .then(res => {
                 if (res.status === 201 || res.status === 200) { // si la petición se hizo con éxito
                     return res.data; // retornar la data de la respuesta

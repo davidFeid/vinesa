@@ -35,9 +35,9 @@ public class FuncionesController {
     }
 
    @PostMapping
-    @RequestMapping(value = "CrearFuncion", method = RequestMethod.POST)
-    public ResponseEntity<?> CrearFuncion(@RequestBody Funcion funcion){
-        Funcion FuncionCreada = this.fsimpl.CrearFuncion(funcion);
+    @RequestMapping(value = "CrearFuncion/{id_sala}/{id_pelicula}", method = RequestMethod.POST)
+    public ResponseEntity<?> CrearFuncion(@RequestBody Funcion funcion,@PathVariable int id_sala,@PathVariable int id_pelicula){
+        Funcion FuncionCreada = this.fsimpl.CrearFuncion(funcion,id_sala, id_pelicula);
         return ResponseEntity.status(HttpStatus.CREATED).body(FuncionCreada);
     }
     @PutMapping

@@ -15,7 +15,7 @@ public class Funcion {
     @JoinColumn(name = "Id_sala")
     private Sala sala;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Id_pelicula")
     private Pelicula pelicula;
     @Column(name = "Estado")
@@ -84,6 +84,5 @@ public class Funcion {
     public void setEstado(int estado) {
         Estado = estado;
     }
-
 
 }

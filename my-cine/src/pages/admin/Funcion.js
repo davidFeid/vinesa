@@ -106,7 +106,10 @@ export default class Funcion extends Component{
         // );
     }
     async componentDidMount() {
-        this.funcionService.getAll().then(data => this.setState({funciones: data}));
+        this.funcionService.getAll().then(data => {
+            this.setState({funciones: data});
+            console.log(data);
+        });
         this.peliculaService.getAll().then(data => this.setState({peliculas: data}));
         this.salaService.getAll().then(data => this.setState({salas: data}));
 
@@ -125,7 +128,6 @@ export default class Funcion extends Component{
         const formattedHorario = horario.toISOString().split('T')[1].split('.')[0];
 
         this.funcionService.save({...this.state.funcion, fecha: formattedFecha, horario: formattedHorario} )
-
             .then(data => {
                 this.setState({
                     visible : false
@@ -186,8 +188,8 @@ export default class Funcion extends Component{
                     <DataTable value={this.state.funciones} paginator={true} rows={10} rowsPerPageOptions={[5, 10, 25, 50]} removableSort  paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
                                currentPageReportTemplate="{first} to {last} of {totalRecords}" tableStyle={{ minWidth: '50rem' }} selectionMode={"single"} selection={this.state.selectedFuncion} onSelectionChange={e => this.setState({selectedFuncion: e.value, footer: this.footerEdit})}>
                         <Column sortable filter field="id_funcion" header="Id Funcion"></Column>
-                        <Column sortable filter field="id_sala" header="Id Sala"></Column>
-                        <Column sortable filter field="id_pelicula" header="Id Pelicula"></Column>
+                        <Column sortable filter field="sala.id_sala" header="Sala"></Column>
+                        <Column sortable filter field="pelicula.titulo" header="Pelicula"></Column>
                         <Column sortable filter field="horario" header="Horario"></Column>
                         <Column sortable filter field="fecha" header="Fecha"></Column>
                         <Column sortable filter field="precio" header="Precio"></Column>
@@ -232,7 +234,6 @@ export default class Funcion extends Component{
                             this.setState(prevState =>{
                                 let funcion = Object.assign({}, prevState.funcion);
                                 funcion.fecha = val;
-                                console.log(funcion);
                                 return { funcion };
                             })}
                         } dateFormat="dd/mm/yy"></Calendar>
