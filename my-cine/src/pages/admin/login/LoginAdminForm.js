@@ -48,7 +48,7 @@ export default class LoginAdminForm extends Component {
                 const userInfo = {
                     authenticated: true,
                     role: 'admin',
-                    username: 'johndoe'
+                    username: 'admin'
                 };
 
                 localStorage.setItem('userInfo', JSON.stringify(userInfo));

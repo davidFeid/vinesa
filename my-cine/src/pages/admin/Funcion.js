@@ -119,9 +119,10 @@ export default class Funcion extends Component{
             this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, rellene todos los campos' });
             return;
         }
-        const formattedFecha = fecha.toISOString().split('T')[0];
 
+        const formattedFecha = fecha.toISOString().split('T')[0];
         const formattedHorario = horario.toISOString().split('T')[1].split('.')[0];
+
         this.funcionService.save({...this.state.funcion, fecha: formattedFecha, horario: formattedHorario} )
 
             .then(data => {
