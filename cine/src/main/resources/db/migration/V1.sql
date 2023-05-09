@@ -190,9 +190,6 @@ CREATE TABLE `usuarios` (
                             `Direccion` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
                             `Ciudad` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
                             `Codigo_postal` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-                            `Fecha_alta` datetime DEFAULT NULL,
-                            `Tipo_usuario` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-                            `imagen` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
                             `Estado` int(11) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -200,12 +197,12 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`Id_usuario`, `Usuario`, `Password`, `Nombre`, `Apellido`, `DNI`, `Direccion`, `Ciudad`, `Codigo_postal`, `Fecha_alta`, `Tipo_usuario`, `Estado`) VALUES
-                                                                                                                                                                           (1, 'usuario1', 'contraseña123', 'Juan', 'Pérez', 12345678, 'Calle Falsa 123', 'Buenos Aires', '1234', '2023-04-25 00:00:00', 'Cliente', 1),
-                                                                                                                                                                           (2, 'usuario2', 'contraseña456', 'María', 'González', 23456789, 'Calle Falsa 456', 'Córdoba', '5678', '2023-04-25 00:00:00', 'Cliente', 1),
-                                                                                                                                                                           (3, 'usuario3', 'contraseña789', 'Pedro', 'Rodríguez', 34567890, 'Calle Falsa 789', 'Rosario', '9012', '2023-04-25 00:00:00', 'Cliente', 1),
-                                                                                                                                                                           (4, 'usuario4', 'contraseñaabc', 'Laura', 'Gómez', 45678901, 'Calle Falsa 1011', 'Mendoza', '3456', '2023-04-25 00:00:00', 'Cliente', 1),
-                                                                                                                                                                           (5, 'usuario5', 'contraseñadef', 'Jorge', 'Fernández', 56789012, 'Calle Falsa 1213', 'San Juan', '7890', '2023-04-25 00:00:00', 'Cliente', 1);
+INSERT INTO `usuarios` (`Id_usuario`, `Usuario`, `Password`, `Nombre`, `Apellido`, `DNI`, `Direccion`, `Ciudad`, `Codigo_postal`, `Estado`) VALUES
+                                                                                                                                                                           (1, 'usuario1', 'contraseña123', 'Juan', 'Pérez', 12345678, 'Calle Falsa 123', 'Buenos Aires', '1234', 1),
+                                                                                                                                                                           (2, 'usuario2', 'contraseña456', 'María', 'González', 23456789, 'Calle Falsa 456', 'Córdoba', '5678', 1),
+                                                                                                                                                                           (3, 'usuario3', 'contraseña789', 'Pedro', 'Rodríguez', 34567890, 'Calle Falsa 789', 'Rosario', '9012', 1),
+                                                                                                                                                                           (4, 'usuario4', 'contraseñaabc', 'Laura', 'Gómez', 45678901, 'Calle Falsa 1011', 'Mendoza', '3456', 1),
+                                                                                                                                                                           (5, 'usuario5', 'contraseñadef', 'Jorge', 'Fernández', 56789012, 'Calle Falsa 1213', 'San Juan', '7890', 1);
 
 --
 -- Índices para tablas volcadas

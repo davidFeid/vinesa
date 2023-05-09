@@ -114,6 +114,7 @@ export default class Funcion extends Component{
 
 
     save(){
+        console.log(this.state.funcion);
         const { id_sala, id_pelicula,horario, fecha, precio}=this.state.funcion;
         if(!id_sala || !id_pelicula || !horario || !fecha || !precio ){
             this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, rellene todos los campos' });

@@ -27,6 +27,16 @@ export default class Pelicula extends Component{
             usuarios: [],
             visible : false,
             visibleShow : false,
+            usuario : {
+                id_usuario: null,
+                usuario: null,
+                nombre: null,
+                apellido: null,
+                dni: null,
+                direccion: null,
+                ciudad: null,
+                codigo_postal: null
+            },
             selectedUsuario : {
 
             },
@@ -34,11 +44,6 @@ export default class Pelicula extends Component{
             formData:  new FormData()
         };
         this.items = [
-            {
-                label : 'Nuevo',
-                icon : 'pi pi-fw pi-plus',
-                command : () => {this.showSaveDialog()}
-            },
             {
                 label : 'Mostrar',
                 icon : 'pi pi-fw pi-eye',
@@ -51,13 +56,32 @@ export default class Pelicula extends Component{
             }
         ];
         this.usuarioService = new UsuarioService();
+        this.delete = this.delete.bind(this);
     }
 
     componentDidMount() {
         this.usuarioService.getAll().then(data => this.setState({usuarios: data}));
     }
 
-
+    delete() {
+        if (this.state.selectedUsuario && this.state.selectedUsuario.id_usuario) {
+            if(window.confirm("¿Realmente desea Activar/Desactivar el registro '"+ this.state.selectedUsuario.usuario +"' ?")){
+                this.usuarioService.delete(this.state.selectedUsuario.id_usuario)
+                    .then(data => {
+                        this.setState({
+                            visible : false
+                        });
+                        this.toast.show({ severity: 'success', summary: 'Éxito', detail: 'Formulario guardado exitosamente' });
+                        this.usuarioService.getAll().then(data => this.setState({usuarios: data}));
+                    })
+                    .catch(error => {
+                        this.toast.show({ severity: 'error', summary: 'Error', detail: 'Ocurrió un error al guardar la película' });
+                    });
+            }
+        } else {
+            this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, seleccione una película' });
+        }
+    }
 
     render(){
         return(
@@ -77,12 +101,51 @@ export default class Pelicula extends Component{
                         <Column sortable filter field="estado" header="Estado"></Column>
                     </DataTable>
                 </Panel>
+                <Dialog header="Mostrar Usuario" visible={this.state.visibleShow} style={{ width: '70%' }} modal={true} onHide={() => this.setState({visibleShow : false})}>
+                    <Fieldset legend={"Usuario: "+this.state.usuario.id_usuario}>
+                        <label htmlFor="usuario"><b>Usuario:</b></label>
+                        <p id="usuario">{this.state.usuario.usuario}</p>
+                        <label htmlFor="nombre"><b>Nombre:</b></label>
+                        <p id="nombre">{this.state.usuario.nombre}</p>
+                        <label htmlFor="apellido"><b>Apellido::</b></label>
+                        <p id="apellido">{this.state.usuario.apellido}</p>
+                        <label htmlFor="dni"><b>DNI::</b></label>
+                        <p id="dni">{this.state.usuario.dni}</p>
+                        <label htmlFor="direccion"><b>Direccion:</b></label>
+                        <p id="direccion">{this.state.usuario.direccion}</p>
+                        <label htmlFor="ciudad"><b>Ciudad:</b></label>
+                        <p id="ciudad">{this.state.usuario.ciudad}</p>
+                        <label htmlFor="codigoPostal"><b>Codigo Postal:</b></label>
+                        <p id="codigoPostal">{this.state.usuario.codigo_postal}</p>
+                        <label htmlFor="estado"><b>Estado:</b></label>
+                        <p id="estado">{this.state.usuario.estado}</p>
+                    </Fieldset>
+                </Dialog>
                 <Toast ref={(el) => this.toast = el} />
             </div>
         );
     }
 
-
+    showShowDialog() {
+        if (this.state.selectedUsuario && this.state.selectedUsuario.id_usuario) {
+            this.setState({
+                visibleShow: true,
+                usuario: {
+                    id_usuario: this.state.selectedUsuario.id_usuario,
+                    usuario: this.state.selectedUsuario.usuario,
+                    nombre: this.state.selectedUsuario.nombre,
+                    apellido: this.state.selectedUsuario.apellido,
+                    dni: this.state.selectedUsuario.dni,
+                    direccion: this.state.selectedUsuario.direccion,
+                    ciudad: this.state.selectedUsuario.ciudad,
+                    codigo_postal: this.state.selectedUsuario.codigo_postal,
+                    estado: this.state.selectedUsuario.estado
+                }
+            });
+        } else {
+            this.toast.show({ severity: 'warn', summary: 'Advertencia', detail: 'Por favor, seleccione un Usuario' });
+        }
+    }
 
 
 }
