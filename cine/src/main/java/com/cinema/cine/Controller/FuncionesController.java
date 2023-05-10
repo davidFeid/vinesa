@@ -34,7 +34,7 @@ public class FuncionesController {
         return ResponseEntity.ok(listarFuncion);
     }
 
-   @PostMapping
+    @PostMapping
     @RequestMapping(value = "CrearFuncion/{id_sala}/{id_pelicula}", method = RequestMethod.POST)
     public ResponseEntity<?> CrearFuncion(@RequestBody Funcion funcion,@PathVariable int id_sala,@PathVariable int id_pelicula){
         Funcion FuncionCreada = this.fsimpl.CrearFuncion(funcion,id_sala, id_pelicula);
