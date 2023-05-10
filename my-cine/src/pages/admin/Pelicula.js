@@ -90,8 +90,8 @@ export default class Pelicula extends Component{
     }
 
     componentDidMount() {
-        this.peliculaService.getAll().then(data => /*this.setState({peliculas: data})*/ {console.log(data)});
-        console.log(this.state.peliculas);
+        this.peliculaService.getAll().then(data => this.setState({peliculas: data}) );
+
     }
 
     onUpload(){
