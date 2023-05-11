@@ -1,21 +1,20 @@
 package com.cinema.cine.Entity;
 
-import jakarta.persistence.*;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "butacasreservas")
-@IdClass(ButacaReservaId.class)
-public class ButacaReserva {
+public class ButacaReservaId implements Serializable {
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "Id_butaca")
     private Butaca butaca;
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "Id_reserva")
     private Reserva reserva;
+
+    public ButacaReservaId() {
+        // Constructor vacío necesario para JPA
+    }
+
+    public ButacaReservaId(Butaca butaca, Reserva reserva) {
+        this.butaca = butaca;
+        this.reserva = reserva;
+    }
 
     public Butaca getButaca() {
         return butaca;
@@ -32,4 +31,6 @@ public class ButacaReserva {
     public void setReserva(Reserva reserva) {
         this.reserva = reserva;
     }
+
+
 }

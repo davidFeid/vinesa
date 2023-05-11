@@ -69,7 +69,7 @@ CREATE TABLE `butacas` (
 
 DROP TABLE IF EXISTS `butacasreservas`;
 CREATE TABLE `butacasreservas` (
-                                   `Id_butaca` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+                                   `Id_butaca` int(11) NOT NULL,
 
                                    `Id_reserva` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -309,7 +309,7 @@ ALTER TABLE `butacas`
 -- Filtros para la tabla `butacasreservas`
 --
 ALTER TABLE `butacasreservas`
-    ADD CONSTRAINT `butacasReservas_ibfk_1` FOREIGN KEY (`Id_butaca`) REFERENCES `butacas` (`Id_butaca`),
+    ADD CONSTRAINT `butacasReservas_ibfk_1` FOREIGN KEY (`Id_butaca`) REFERENCES `butacas` (`id`),
   ADD CONSTRAINT `butacasReservas_ibfk_2` FOREIGN KEY (`Id_reserva`) REFERENCES `reservas` (`Id_reserva`);
 
 --

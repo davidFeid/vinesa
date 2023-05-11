@@ -8,7 +8,7 @@ public interface ButacaReservaService {
 
     public List<ButacaReserva> ConsultarButacaReservas();
 
-    public ButacaReserva CrearButacaReserva(ButacaReserva butacaReserva);
+    public ButacaReserva CrearButacaReserva(int id_butaca, int id_reserva);
 
     public ButacaReserva ModificarButacaReserva(ButacaReserva butacaReserva,int id);
 
