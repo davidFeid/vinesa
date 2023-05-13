@@ -1,9 +1,12 @@
-import '../App.css';
+import './Home.css';
 import React,  {Component} from "react";
 import {PeliculaService} from "../service/PeliculaService";
 import {FuncionService} from "../service/FuncionService";
 import { PrimeIcons } from 'primereact/api';
 import {Dialog} from "primereact/dialog";
+import { Link } from 'react-router-dom';
+
+
 
 export default class Home extends  Component{
     constructor(props) {
@@ -59,6 +62,7 @@ export default class Home extends  Component{
 
                 <div className="card-container" >
                     {this.state.peliculas.map((pelicula) => (
+
                         <div className="card" key={pelicula.idPelicula}>
                             <div className="card-image-container">
                                 <img
@@ -66,13 +70,16 @@ export default class Home extends  Component{
                                     alt="Imagen de la carta"
                                 />
                                 <div className="card-overlay">
-                                    <h2>{pelicula.titulo}</h2>
+                                    <Link to={`/peliculas/${pelicula.idPelicula}`}>
+                                        <h2>{pelicula.titulo}</h2>
+                                    </Link>
                                     <p>Hoy,{formattedDate}</p>
                                 </div>
                             </div>
                             <div className="card-content">
-                                <h3>Información</h3>
-                                <p>{pelicula.descripcion}</p>
+                                <button className="card-button">
+                                    <i className="pi  pi-book"> VER MÁS DÍAS</i>
+                                </button>
                             </div>
                             <div className="card-buttons">
                                 <button className="card-button" onClick={() => this.openVideo(pelicula.video)}>

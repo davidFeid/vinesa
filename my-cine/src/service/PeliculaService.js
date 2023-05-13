@@ -62,5 +62,14 @@ export class PeliculaService{
             });
     }
 
+    getPeliculaById(id) {
+        return axios.get(this.baseUrl + "ConsultarPelicula/" + id)
+            .then(res => res.data)
+            .catch(error => {
+                console.error('Error fetching movie by ID:', error);
+                throw error;
+            });
+    }
+
 
 }
