@@ -1,0 +1,47 @@
+.pelicula-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.pelicula-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.pelicula-titulo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.pelicula-info {
+    display: flex;
+    align-items: flex-start;
+}
+
+.pelicula-poster {
+    margin-right: 20px;
+}
+
+.pelicula-poster img {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.pelicula-details {
+    flex: 1;
+}
+
+.pelicula-details h4 {
+    font-weight: bold;
+}
+
+.pelicula-details p {
+    margin: 0;
+}
+
+.pelicula-details .pelicula-trailer {
+    margin-top: 20px;
+}

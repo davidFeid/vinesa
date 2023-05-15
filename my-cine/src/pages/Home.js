@@ -58,7 +58,7 @@ export default class Home extends  Component{
 
         return (
             <div>
-                <h1>Home</h1>
+                <h1>Cartellera</h1>
 
                 <div className="card-container" >
                     {this.state.peliculas.map((pelicula) => (
