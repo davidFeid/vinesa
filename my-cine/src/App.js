@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes, useParams} from 'react-router-dom';
 import MyProtectedComponent from './pages/MyProtectedComponent';
 import RouteProtected from './pages/RouteProtected';
 import Layout  from "./pages/Layout";
@@ -40,7 +40,9 @@ function App() {
                 <Route path="funciones" element={<Funcion/>} />
                 <Route path="usuarios" element={<Usuario/>} />
             </Route>
-            <Route path="/peliculas/:id" element={<PeliculaPage />} />
+            <Route path="/peliculas" >
+               <Route path={":id"}  element={<PeliculaPage />} />
+            </Route>
 
             <Route path="*" element={<Error404/>}/>
         </Routes>
