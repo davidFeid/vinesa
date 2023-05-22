@@ -3,30 +3,47 @@ import './Home.css';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {PeliculaService} from '../service/PeliculaService';
+import {FuncionService} from "../service/FuncionService";
 import {Dialog} from "primereact/dialog"; // Importa la clase directamente
 
 function PeliculaPage() {
     const { id } = useParams();
     const [pelicula, setPelicula] = useState(null);
+    const [funcion, setFuncion] = useState(null);
     const [visibleVideo, setVisibleVideo] = useState(false);
     const [videoUrl, setVideoUrl] = useState("");
 
     const peliculaService = new PeliculaService(); // Crea una instancia de PeliculaService
-
+    const funcionService = new FuncionService();
 
     useEffect(() => {
         // Lógica para obtener los datos de la película
         const getPelicula = async () => {
             try {
-                console.log(id);
+
                 const response = await peliculaService.getPeliculaById(id);
                 setPelicula(response);
+                console.log(response);
             } catch (error) {
                 console.error(error);
                 // Manejar el error de alguna manera (por ejemplo, mostrar un mensaje de error)
             }
 
         };
+        const getFuncion = async () =>{
+            try{
+
+            const responseFuncion = await funcionService.BuscarFuncionByPelicula(id);
+            setFuncion(responseFuncion);
+                console.log(responseFuncion);
+
+        } catch (error) {
+            console.error(error);
+            // Manejar el error de alguna manera (por ejemplo, mostrar un mensaje de error)
+        }
+
+        };
+        getFuncion();
         getPelicula();
     }, [id]);
 
@@ -43,11 +60,16 @@ function PeliculaPage() {
 
     if (!pelicula) {
         // Mientras se obtienen los datos de la película, puedes mostrar un indicador de carga o un mensaje
-        return <div>Cargando...</div>;
+        return <div>Cargando pelicula...</div>;
+    }
+    if (!funcion) {
+        // Mientras se obtienen los datos de la película, puedes mostrar un indicador de carga o un mensaje
+        return <div>Cargando funcion...</div>;
     }
 
     // Una vez que se obtienen los datos, puedes mostrar la información de la película
     return (
+
         <div className="pelicula-page">
             <div className="pelicula-header">
                 <h2 className="pelicula-titulo">{pelicula.titulo}</h2>
@@ -73,12 +95,20 @@ function PeliculaPage() {
                         <h4>Género:</h4>
                         <p>{pelicula.genero}</p>
                     </div>
+                    <div className="pelicula-sesiones">
+                        <h4>Sesiones:</h4>
+                        {funcion.map((f, index) => (
+                            <p className="horario-funcion" key={index}>{f.horario}</p>
+                        ))}
+                        <br/>
+                    </div>
                     <div className="pelicula-trailer">
                         <h4>Tráiler:</h4>
                         <button className="card-button" onClick={() => openVideo(pelicula.video)}>
                             <i className="pi pi-caret-right"> Trailer</i>
                         </button>
                     </div>
+
                 </div>
             </div>
             <Dialog visible={visibleVideo} onHide={closeVideo} modal={true} style={{ width: "70vw" }}>

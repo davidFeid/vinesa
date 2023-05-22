@@ -112,6 +112,7 @@ export default class Funcion extends Component{
         this.peliculaService.getAll().then(data => this.setState({peliculas: data}));
         this.salaService.getAll().then(data => this.setState({salas: data}));
 
+
     }
 
 

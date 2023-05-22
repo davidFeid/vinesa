@@ -31,6 +31,7 @@ export default class Home extends  Component{
             }
         }
         this.peliculaService = new PeliculaService();
+        this.funcionService = new FuncionService();
     }
     componentDidMount() {
         this.peliculaService.getAll().then(data => this.setState({peliculas: data}) );
