@@ -5,11 +5,8 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
 
-    @Column(name="Id_usuario")
-    private int Id_usuario;
+    @Id
     @Column(name="Usuario")
     private String Usuario;
     @Column(name = "Password")
@@ -19,7 +16,7 @@ public class Usuario {
     @Column(name = "Apellido")
     private String Apellido;
     @Column(name = "DNI")
-    private int DNI;
+    private String DNI;
     @Column(name = "Direccion")
     private String Direccion;
     @Column(name = "Ciudad")
@@ -28,13 +25,6 @@ public class Usuario {
     private String Codigo_postal;
     @Column(name = "Estado")
     private int Estado;
-    public int getId_usuario() {
-        return Id_usuario;
-    }
-
-    public void setId_usuario(int id_usuario) {
-        Id_usuario = id_usuario;
-    }
 
     public String getUsuario() {
         return Usuario;
@@ -68,11 +58,11 @@ public class Usuario {
         Apellido = apellido;
     }
 
-    public int getDNI() {
+    public String getDNI() {
         return DNI;
     }
 
-    public void setDNI(int DNI) {
+    public void setDNI(String DNI) {
         this.DNI = DNI;
     }
 

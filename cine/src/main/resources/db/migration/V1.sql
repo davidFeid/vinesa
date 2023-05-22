@@ -147,7 +147,7 @@ DROP TABLE IF EXISTS `reservas`;
 CREATE TABLE `reservas` (
                             `Id_reserva` int(11) NOT NULL,
                             `Id_funcion` int(11) NOT NULL,
-                            `Id_usuario` int(11) NOT NULL,
+                            `Usuario` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
                             `Fecha_reserva` timestamp NOT NULL DEFAULT current_timestamp(),
                             `Precio` int(11) DEFAULT NULL,
                             `Estado` int(11) DEFAULT 1
@@ -186,12 +186,11 @@ CREATE TABLE `salas` (
 
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
-                            `Id_usuario` int(11) NOT NULL,
                             `Usuario` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
                             `Password` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
                             `Nombre` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
                             `Apellido` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-                            `DNI` int(11) DEFAULT NULL,
+                            `DNI` varchar(9) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
                             `Direccion` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
                             `Ciudad` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
                             `Codigo_postal` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
@@ -202,13 +201,13 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`Id_usuario`, `Usuario`, `Password`, `Nombre`, `Apellido`, `DNI`, `Direccion`, `Ciudad`, `Codigo_postal`, `Estado`) VALUES
-                                                                                                                                                                           (1, 'usuario1', 'contraseña123', 'Juan', 'Pérez', 12345678, 'Calle Falsa 123', 'Buenos Aires', '1234', 1),
-                                                                                                                                                                           (2, 'usuario2', 'contraseña456', 'María', 'González', 23456789, 'Calle Falsa 456', 'Córdoba', '5678', 1),
-                                                                                                                                                                           (3, 'usuario3', 'contraseña789', 'Pedro', 'Rodríguez', 34567890, 'Calle Falsa 789', 'Rosario', '9012', 1),
-                                                                                                                                                                           (4, 'usuario4', 'contraseñaabc', 'Laura', 'Gómez', 45678901, 'Calle Falsa 1011', 'Mendoza', '3456', 1),
-                                                                                                                                                                           (5, 'usuario5', 'contraseñadef', 'Jorge', 'Fernández', 56789012, 'Calle Falsa 1213', 'San Juan', '7890', 1);
-
+INSERT INTO `usuarios` ( `Usuario`, `Password`, `Nombre`, `Apellido`, `DNI`, `Direccion`, `Ciudad`, `Codigo_postal`, `Estado`) VALUES
+                                                                                                                                                                           ('usuario1', '014436b6640304b2cfad8a43f4aaad1a', 'Juan', 'Pérez', 12345678, 'Calle Falsa 123', 'Buenos Aires', '1234', 1),
+                                                                                                                                                                           ('usuario2', '014436b6640304b2cfad8a43f4aaad1a', 'María', 'González', 23456789, 'Calle Falsa 456', 'Córdoba', '5678', 1),
+                                                                                                                                                                           ('usuario3', '014436b6640304b2cfad8a43f4aaad1a', 'Pedro', 'Rodríguez', 34567890, 'Calle Falsa 789', 'Rosario', '9012', 1),
+                                                                                                                                                                           ('usuario4', '014436b6640304b2cfad8a43f4aaad1a', 'Laura', 'Gómez', 45678901, 'Calle Falsa 1011', 'Mendoza', '3456', 1),
+                                                                                                                                                                           ('usuario5', '014436b6640304b2cfad8a43f4aaad1a', 'Jorge', 'Fernández', 56789012, 'Calle Falsa 1213', 'San Juan', '7890', 1);
+                                                                                                                                                                                        /*contraseña: contraseña123*/
 --
 -- Índices para tablas volcadas
 --
@@ -249,7 +248,7 @@ ALTER TABLE `peliculas`
 --
 ALTER TABLE `reservas`
     ADD PRIMARY KEY (`Id_reserva`),
-  ADD KEY `IdUsuario` (`Id_usuario`),
+  ADD KEY `Usuario` (`Usuario`),
   ADD KEY `IdFuncion` (`Id_funcion`);
 
 --
@@ -262,7 +261,7 @@ ALTER TABLE `salas`
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-    ADD PRIMARY KEY (`Id_usuario`);
+    ADD PRIMARY KEY (`Usuario`);
 
 --
 -- AUTO_INCREMENT de las tablas `butacas`
@@ -295,11 +294,6 @@ ALTER TABLE `reservas`
 ALTER TABLE `salas`
     MODIFY `Id_sala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
---
--- AUTO_INCREMENT de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-    MODIFY `Id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
@@ -329,7 +323,7 @@ ALTER TABLE `funciones`
 -- Filtros para la tabla `reservas`
 --
 ALTER TABLE `reservas`
-    ADD CONSTRAINT `reservas_ibfk_1` FOREIGN KEY (`Id_usuario`) REFERENCES `usuarios` (`Id_usuario`),
+    ADD CONSTRAINT `reservas_ibfk_1` FOREIGN KEY (`Usuario`) REFERENCES `usuarios` (`Usuario`),
   ADD CONSTRAINT `reservas_ibfk_2` FOREIGN KEY (`Id_funcion`) REFERENCES `funciones` (`Id_funcion`);
 COMMIT;
 

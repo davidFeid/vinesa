@@ -13,6 +13,8 @@ import Pelicula  from "./pages/admin/Pelicula";
 import Sala from "./pages/admin/Sala";
 import Butaca from "./pages/admin/Butaca";
 import LoginAdminForm  from "./pages/admin/login/LoginAdminForm";
+import LoginUsuarioForm  from "./pages/usuario/LoginUsuarioForm";
+import RegisterUsuarioForm  from "./pages/usuario/RegisterUsuarioForm";
 import Funcion from "./pages/admin/Funcion";
 import Usuario from "./pages/admin/Usuario";
 import PeliculaPage from './pages/PeliculaPage';
@@ -43,7 +45,8 @@ function App() {
             <Route path="/peliculas" >
                <Route path={":id"}  element={<PeliculaPage />} />
             </Route>
-
+            <Route path="/registro" element={<RegisterUsuarioForm/>}/>
+            <Route path="/login" element={<LoginUsuarioForm/>}/>
             <Route path="*" element={<Error404/>}/>
         </Routes>
     );

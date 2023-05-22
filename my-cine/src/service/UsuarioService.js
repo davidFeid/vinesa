@@ -22,4 +22,33 @@ export class UsuarioService{
             });
     }
 
+    save(usuario){
+        return axios.post(this.baseUrl + "CrearUsuario", usuario)
+            .then(res => {
+                if (res.status === 201 || res.status === 200) { // si la petición se hizo con éxito
+                    return res.data; // retornar la data de la respuesta
+                } else { // si hubo un error en la petición
+                    throw new Error('Hubo un error en la petición'); // lanzar una excepción para manejar el error
+                }
+            })
+            .catch(error => {
+                console.error(error); // manejar el error
+            });
+    }
+
+    login(usuario){
+        return axios.post(this.baseUrl + "LoginUsuario", usuario)
+            .then(res => {
+                if (res.status === 201 || res.status === 200) { // si la petición se hizo con éxito
+                    return res.data; // retornar la data de la respuesta
+                } else { // si hubo un error en la petición
+                    throw new Error('Hubo un error en la petición'); // lanzar una excepción para manejar el error
+                }
+            })
+            .catch(error => {
+                console.error(error); // manejar el error
+            });
+    }
+
+
 }

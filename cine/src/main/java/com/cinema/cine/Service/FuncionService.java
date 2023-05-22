@@ -1,6 +1,7 @@
 package com.cinema.cine.Service;
 
 import com.cinema.cine.Entity.Funcion;
+import com.cinema.cine.Entity.Pelicula;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ public interface FuncionService {
     public Funcion BuscarFuncion(int id);
 
     public void EliminarFuncion(int id);
+
+    public List<Funcion> findByPelicula(Pelicula pelicula);
 
 }

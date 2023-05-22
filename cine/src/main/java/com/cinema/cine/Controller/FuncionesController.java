@@ -4,6 +4,7 @@ import com.cinema.cine.Entity.Funcion;
 import com.cinema.cine.Entity.Pelicula;
 import com.cinema.cine.Entity.Sala;
 import com.cinema.cine.Service.FuncionServiceIMPL.FSIMPL;
+import com.cinema.cine.Service.PeliculaService;
 import com.cinema.cine.Service.PeliculaServiceIMPL.PSIMPL;
 import com.cinema.cine.Service.SalaServiceIMPL.SSIMPL;
 import org.springframework.http.HttpStatus;
@@ -60,5 +61,13 @@ public class FuncionesController {
     public ResponseEntity<?> EliminarFuncion(@PathVariable int id){
         this.fsimpl.EliminarFuncion(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    @RequestMapping(value = "BuscarFuncionByPelicula/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> BuscarFuncionByPelicula(@PathVariable int id){
+        Pelicula pelicula = this.psimpl.BuscarPelicula(id);
+        List<Funcion> listarFuncion = this.fsimpl.findByPelicula(pelicula);
+        return ResponseEntity.ok(listarFuncion);
     }
 }

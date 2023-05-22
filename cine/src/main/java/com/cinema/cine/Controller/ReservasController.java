@@ -40,7 +40,7 @@ public class ReservasController {
 
     @PostMapping
     @RequestMapping(value = "CrearReserva/{id_funcion}/{id_usuario}", method = RequestMethod.POST)
-    public ResponseEntity<?> procesarDatos(@RequestBody Map<String, Object> datos, @PathVariable int id_funcion,@PathVariable int id_usuario) {
+    public ResponseEntity<?> procesarDatos(@RequestBody Map<String, Object> datos, @PathVariable int id_funcion,@PathVariable String id_usuario) {
         /*Reserva reserva= (Reserva) datos.get("objeto");*/
         Reserva reserva = new Reserva();
         reserva.setPrecio((Integer) datos.get("precio"));

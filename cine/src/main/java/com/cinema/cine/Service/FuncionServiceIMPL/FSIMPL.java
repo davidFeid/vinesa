@@ -69,4 +69,11 @@ public class FSIMPL implements FuncionService {
             this.repo.save(funcionExistente);
         }
     }
+
+    @Override
+    public List<Funcion> findByPelicula(Pelicula pelicula) {
+        return this.repo.findByPelicula(pelicula);
+    }
+
+
 }

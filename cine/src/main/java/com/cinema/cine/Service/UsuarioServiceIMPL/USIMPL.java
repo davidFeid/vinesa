@@ -1,14 +1,17 @@
 package com.cinema.cine.Service.UsuarioServiceIMPL;
 
+import com.cinema.cine.Entity.Admin;
 import com.cinema.cine.Entity.Sala;
 import com.cinema.cine.Entity.Usuario;
 import com.cinema.cine.Repository.UsuarioRepo;
 import com.cinema.cine.Service.UsuarioService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class USIMPL implements UsuarioService {
@@ -26,10 +29,9 @@ public class USIMPL implements UsuarioService {
     }
 
     @Override
-    public Usuario ModificarUsuario(Usuario usuario,int id) {
+    public Usuario ModificarUsuario(Usuario usuario,String id) {
         Usuario usuarioExistente = this.repo.findById(id).orElse(null);
         if (usuarioExistente != null) {
-            usuarioExistente.setId_usuario(usuario.getId_usuario());
             usuarioExistente.setUsuario(usuario.getUsuario());
             usuarioExistente.setPassword(usuario.getPassword());
             usuarioExistente.setNombre(usuario.getNombre());
@@ -48,10 +50,10 @@ public class USIMPL implements UsuarioService {
 
 
     @Override
-    public Usuario BuscarUsuario(int id) { return  this.repo.findById(id).get();}
+    public Usuario BuscarUsuario(String id) { return  this.repo.findById(id).get();}
 
     @Override
-    public void EliminarUsuario(int id) {
+    public void EliminarUsuario(String id) {
         Usuario usuarioExistente = this.repo.findById(id).orElse(null);
         if (usuarioExistente != null) {
             if (usuarioExistente.getEstado() == 1) {
@@ -62,5 +64,12 @@ public class USIMPL implements UsuarioService {
             this.repo.save(usuarioExistente);
         }
 
+    }
+
+    @Override
+    public Boolean LoginUsuario(Usuario usuario) {
+        Usuario usuarioLogued = this.repo.findById(usuario.getUsuario()).get();
+        System.out.println(DigestUtils.md5Hex(usuario.getPassword()));
+        return Objects.equals(DigestUtils.md5Hex(usuario.getPassword()), usuarioLogued.getPassword());
     }
 }

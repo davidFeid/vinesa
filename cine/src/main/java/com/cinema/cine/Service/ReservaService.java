@@ -9,7 +9,7 @@ public interface ReservaService {
 
     public List<Reserva> ConsultarReservas();
 
-    public Reserva CrearReserva(Reserva reserva, int id_funcion, int id_usuario);
+    public Reserva CrearReserva(Reserva reserva, int id_funcion, String id_usuario);
 
     public Reserva ModificarReserva(Reserva reserva,int id);
 

@@ -1,6 +1,7 @@
 package com.cinema.cine.Controller;
 
 ;
+import com.cinema.cine.Entity.Admin;
 import com.cinema.cine.Entity.Usuario;
 import com.cinema.cine.Service.UsuarioServiceIMPL.USIMPL;
 import org.springframework.http.HttpStatus;
@@ -36,23 +37,30 @@ public class UsuariosController {
 
     @PutMapping
     @RequestMapping(value = "ModificarUsuario/{id}",method =RequestMethod.PUT)
-    public ResponseEntity<?> ModificarUsuario(@RequestBody Usuario usuario,@PathVariable int id){
+    public ResponseEntity<?> ModificarUsuario(@RequestBody Usuario usuario,@PathVariable String id){
         Usuario UsuarioModificada=this.usimpl.ModificarUsuario(usuario, id);
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioModificada);
     }
 
     @GetMapping
     @RequestMapping(value = "BuscarUsuario/{id}",method =RequestMethod.GET)
-    public ResponseEntity<?> BuscarUsuario(@PathVariable int id){
+    public ResponseEntity<?> BuscarUsuario(@PathVariable String id){
         Usuario usuario=this.usimpl.BuscarUsuario(id);
         return ResponseEntity.ok(usuario);
     }
 
     @DeleteMapping
     @RequestMapping(value = "EliminarUsuario/{id}",method =RequestMethod.DELETE)
-    public ResponseEntity<?> EliminarUsuario(@PathVariable int id){
+    public ResponseEntity<?> EliminarUsuario(@PathVariable String id){
         this.usimpl.EliminarUsuario(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping
+    @RequestMapping(value = "LoginUsuario",method =RequestMethod.POST)
+    public ResponseEntity<?> LoginUsuario(@RequestBody Usuario usuario){
+        Boolean usuarioLogueado=this.usimpl.LoginUsuario(usuario);
+        return ResponseEntity.ok(usuarioLogueado);
     }
 
 }

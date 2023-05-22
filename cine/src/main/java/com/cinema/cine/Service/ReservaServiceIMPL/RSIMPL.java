@@ -31,7 +31,7 @@ public class RSIMPL implements ReservaService {
     }
 
     @Override
-    public Reserva CrearReserva(Reserva reserva, int id_funcion, int id_usuario) {
+    public Reserva CrearReserva(Reserva reserva, int id_funcion, String id_usuario) {
         Funcion funcion = funcionRepo.findById(id_funcion)
                 .orElseThrow(() -> new NoSuchElementException("Funcion no encontrada con ID: " + id_funcion));
         reserva.setFuncion(funcion);
