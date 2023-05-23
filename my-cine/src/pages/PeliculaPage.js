@@ -73,7 +73,7 @@ function PeliculaPage() {
 
     // Una vez que se obtienen los datos, puedes mostrar la información de la película
     return (
-
+        <div className="containerPeliculasPage">
         <div className="pelicula-page">
             <div className="pelicula-header">
                 <h2 className="pelicula-titulo">{pelicula.titulo}</h2>
@@ -102,11 +102,10 @@ function PeliculaPage() {
                     <div className="pelicula-sesiones">
                         <h4>Sesiones:</h4>
                         {funcion.map((f, index) => (
-                             <Link to={`/funciones/${f.id_funcion}`}>
-                                    <p className="horario-funcion" key={index}>{f.horario}</p>
-                             </Link>
+                            <Link to={`/funciones/${f.id_funcion}`} key={f.id_funcion}>
+                                <p className="horario-funcion">{f.horario}</p>
+                            </Link>
                         ))}
-                        <br/>
                     </div>
                     <div className="pelicula-trailer">
                         <h4>Tráiler:</h4>
@@ -122,6 +121,7 @@ function PeliculaPage() {
                     <iframe width="100%" height="400" src={videoUrl} title="YouTube Video" frameBorder="0" allowFullScreen />
                 </div>
             </Dialog>
+        </div>
         </div>
     );
 }

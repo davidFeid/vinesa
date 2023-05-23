@@ -62,58 +62,61 @@ export default class Home extends  Component{
         const formattedDate = `${day} ${abbreviatedMonth}`;
 
         return (
-            <div>
-                <h1>Cartellera</h1>
+            <div className="container">
+                <div>
 
-                <div className="card-container" >
-                    {this.state.peliculas.map((pelicula) => (
-                        <div className="card" key={pelicula.idPelicula}>
-                            <div className="card-image-container">
-                                <img
-                                    src={pelicula.imagen}
-                                    alt="Imagen de la carta"
-                                />
-                                <div className="card-overlay">
-                                    <Link to={`/peliculas/${pelicula.idPelicula}`}>
-                                        <h2>{pelicula.titulo}</h2>
-                                    </Link>
-                                    <p>Hoy,{formattedDate}</p>
+                    <h1>Cartellera</h1>
+
+                    <div className="card-container" >
+                        {this.state.peliculas.map((pelicula) => (
+                            <div className="cardCartelera" key={pelicula.idPelicula}>
+                                <div className="card-image-container">
+                                    <img
+                                        src={pelicula.imagen}
+                                        alt="Imagen de la carta"
+                                    />
+                                    <div className="card-overlay">
+                                        <Link to={`/peliculas/${pelicula.idPelicula}`}>
+                                            <h2>{pelicula.titulo}</h2>
+                                        </Link>
+                                        <p>Hoy,{formattedDate}</p>
+                                        <Link to={`/peliculas/${pelicula.idPelicula}`}>
+                                            <p className="card-horario"> VER HORARIOS</p>
+                                        </Link>
+                                    </div>
                                 </div>
-                                 <div className="card-masHoraios">
-                                    <Link to={`/peliculas/${pelicula.idPelicula}`}>
-                                        <i className="pi  pi-book"> VER HORARIOS</i>
-                                    </Link>
-                                 </div>
+
+                               <div className="card-content">
+                                 {this.state.funciones
+                                   .filter(funcion => funcion.pelicula.idPelicula === pelicula.idPelicula)
+                                   .map(f => (
+                                     <Link to={`/funciones/${f.id_funcion}` }key={f.id_funcion}>
+                                       <p className="horario-funcion">{f.horario}</p>
+                                     </Link>
+                                   ))}
+                               </div>
+
+                                <div className="card-buttons">
+                                    <button className="card-button" onClick={() => this.openVideo(pelicula.video)}>
+                                        <i className="pi pi-caret-right"> Trailer</i>
+                                    </button>
+                                    <button className="card-button">
+                                        <Link to={`/peliculas/${pelicula.idPelicula}`}>
+                                            <i className="pi  pi-book"> Info</i>
+                                        </Link>
+                                    </button>
+                                </div>
                             </div>
-                           <div className="card-content">
-                             {this.state.funciones
-                               .filter(funcion => funcion.pelicula.idPelicula === pelicula.idPelicula)
-                               .map(f => (
-                                 <Link to={`/funciones/${f.id_funcion}` }key={f.id_funcion}>
-                                   <p className="horario-funcion">{f.horario}</p>
-                                 </Link>
-                               ))}
-                           </div>
-
-
-
-                            <div className="card-buttons">
-                                <button className="card-button" onClick={() => this.openVideo(pelicula.video)}>
-                                    <i className="pi pi-caret-right"> Trailer</i>
-                                </button>
-                                <button className="card-button">
-                                    <i className="pi  pi-book"> Info</i>
-                                </button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                <Dialog visible={this.state.visibleVideo} onHide={this.closeVideo} modal={true} style={{ width: "70vw" }}>
-                    <div className="youtube-video">
-                        <iframe width="100%" height="400" src={this.state.videoUrl} title="YouTube Video" frameBorder="0" allowFullScreen />
+                        ))}
                     </div>
-                </Dialog>
+
+                    <Dialog visible={this.state.visibleVideo} onHide={this.closeVideo} modal={true} style={{ width: "70vw" }}>
+                        <div className="youtube-video">
+                            <iframe width="100%" height="400" src={this.state.videoUrl} title="YouTube Video" frameBorder="0" allowFullScreen />
+                        </div>
+                    </Dialog>
+
+            </div>
             </div>
         );
     }
