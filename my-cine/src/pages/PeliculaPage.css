@@ -46,10 +46,14 @@
     margin-top: 20px;
 }
 .horario-funcion{
+    cursor: pointer;
     border-radius: 3px;
     background: none;
     float: left;
     text-transform: uppercase;
     border: 1px solid;
     color: rgb(255, 0, 0) !important;
+}
+.card-button {
+    cursor: pointer;
 }

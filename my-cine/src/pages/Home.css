@@ -47,11 +47,9 @@
 }
 
 .card-content {
-
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 25%;
+    left: 5%;
     text-align: center;
     display: none;
     z-index: 2;
@@ -93,6 +91,7 @@
     color:white;
 }
 .card-button {
+    cursor: pointer;
     border-radius: 3px;
     background: none;
     float: left;

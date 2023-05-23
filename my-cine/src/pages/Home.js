@@ -13,6 +13,7 @@ export default class Home extends  Component{
         super(props);
         this.state = {
             peliculas: [],
+            funciones: [],
             visibleVideo: false,
             videoUrl: "",
             visible : false,
@@ -35,6 +36,9 @@ export default class Home extends  Component{
     }
     componentDidMount() {
         this.peliculaService.getAll().then(data => this.setState({peliculas: data}) );
+        this.funcionService.getAll().then(data => this.setState({funciones: data}) );
+
+
     }
 
     openVideo = (videoUrl) => {
@@ -43,6 +47,7 @@ export default class Home extends  Component{
     closeVideo = () => {
         this.setState({ visibleVideo: false, videoUrl: "" });
     };
+
 
     render() {
 
@@ -56,14 +61,12 @@ export default class Home extends  Component{
         const day = today.getDate();
         const formattedDate = `${day} ${abbreviatedMonth}`;
 
-
         return (
             <div>
                 <h1>Cartellera</h1>
 
                 <div className="card-container" >
                     {this.state.peliculas.map((pelicula) => (
-
                         <div className="card" key={pelicula.idPelicula}>
                             <div className="card-image-container">
                                 <img
@@ -76,12 +79,24 @@ export default class Home extends  Component{
                                     </Link>
                                     <p>Hoy,{formattedDate}</p>
                                 </div>
+                                 <div className="card-masHoraios">
+                                    <Link to={`/peliculas/${pelicula.idPelicula}`}>
+                                        <i className="pi  pi-book"> VER HORARIOS</i>
+                                    </Link>
+                                 </div>
                             </div>
-                            <div className="card-content">
-                                <button className="card-button">
-                                    <i className="pi  pi-book"> VER MÁS DÍAS</i>
-                                </button>
-                            </div>
+                           <div className="card-content">
+                             {this.state.funciones
+                               .filter(funcion => funcion.pelicula.idPelicula === pelicula.idPelicula)
+                               .map(f => (
+                                 <Link to={`/funciones/${f.id_funcion}` }key={f.id_funcion}>
+                                   <p className="horario-funcion">{f.horario}</p>
+                                 </Link>
+                               ))}
+                           </div>
+
+
+
                             <div className="card-buttons">
                                 <button className="card-button" onClick={() => this.openVideo(pelicula.video)}>
                                     <i className="pi pi-caret-right"> Trailer</i>

@@ -1,0 +1,51 @@
+
+
+.loading-container {
+  text-align: center;
+}
+
+.loading-text {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #ccc;
+  background-image: linear-gradient(45deg, #666 25%, transparent 25%, transparent 50%, #666 50%, #666 75%, transparent 75%, transparent);
+  background-size: 30px 30px;
+  animation: spin 1s linear infinite;
+}
+
+/* Estilos del mensaje de carga completo */
+.loading-complete {
+  display: none;
+  font-size: 20px;
+  color: #333;
+  animation: fade-in 0.5s ease-in-out 1s forwards;
+}
+
+/* Animaciones */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
