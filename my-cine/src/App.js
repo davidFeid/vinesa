@@ -18,6 +18,7 @@ import RegisterUsuarioForm  from "./pages/usuario/RegisterUsuarioForm";
 import Funcion from "./pages/admin/Funcion";
 import Usuario from "./pages/admin/Usuario";
 import PeliculaPage from './pages/PeliculaPage';
+import FuncionPage from './pages/FuncionPage';
 import Error404 from "./pages/Error404";
 import * as PropTypes from "prop-types";
 
@@ -44,6 +45,9 @@ function App() {
             </Route>
             <Route path="/peliculas" >
                <Route path={":id"}  element={<PeliculaPage />} />
+            </Route>
+            <Route path="/funciones" >
+                <Route path={":id"}  element={<FuncionPage />} />
             </Route>
             <Route path="/registro" element={<RegisterUsuarioForm/>}/>
             <Route path="/login" element={<LoginUsuarioForm/>}/>

@@ -15,8 +15,8 @@ public class Reserva {
     @JoinColumn(name = "Id_funcion")
     private Funcion funcion;
 
-    @ManyToOne
-    @JoinColumn(name = "Id_usuario")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "Usuario")
     private Usuario usuario;
     @Column(name = "Fecha_reserva")
     private String Fecha_reserva;

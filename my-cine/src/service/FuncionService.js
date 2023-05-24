@@ -7,6 +7,20 @@ export class FuncionService{
         return axios.get(this.baseUrl+'ConsultarFuncion').then(res => res.data);
     }
 
+    getById(id){
+        return axios.get(this.baseUrl + "BuscarFuncion/" + id)
+            .then(res => {
+                if (res.status === 201 || res.status === 200) { // si la petición se hizo con éxito
+                    return res.data; // retornar la data de la respuesta
+                } else { // si hubo un error en la petición
+                    throw new Error('Hubo un error en la petición'); // lanzar una excepción para manejar el error
+                }
+            })
+            .catch(error => {
+                console.error(error); // manejar el error
+            });
+    }
+
     save(funcion) {
         return axios.post(this.baseUrl + "CrearFuncion/"+ funcion.id_sala + "/" + funcion.id_pelicula, funcion)
             .then(res => {

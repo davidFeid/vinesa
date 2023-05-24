@@ -55,4 +55,9 @@ public class BRSIMPL implements ButacaReservaService {
     public void EliminarButacaReserva(int id) {
 
     }
+
+    @Override
+    public List<ButacaReserva> findReservasByFuncion(int id) {
+        return this.butacaReservaRepo.findReservasByFuncion(id);
+    }
 }

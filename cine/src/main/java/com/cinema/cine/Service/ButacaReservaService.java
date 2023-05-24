@@ -16,4 +16,6 @@ public interface ButacaReservaService {
 
     public void EliminarButacaReserva(int id);
 
+    List<ButacaReserva> findReservasByFuncion(int id);
+
 }

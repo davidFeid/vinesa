@@ -1,6 +1,7 @@
 package com.cinema.cine.Service.ButacaServiceIMPL;
 
 import com.cinema.cine.Entity.Butaca;
+import com.cinema.cine.Entity.Funcion;
 import com.cinema.cine.Entity.Usuario;
 import com.cinema.cine.Repository.ButacaRepo;
 import com.cinema.cine.Service.ButacaService;
@@ -52,5 +53,10 @@ public class BSIMPL implements ButacaService {
            }
            this.repo.save(butacaExistente);
        }
+    }
+
+    @Override
+    public List<Butaca> findBySala(int id) {
+        return this.repo.findBySala(id);
     }
 }

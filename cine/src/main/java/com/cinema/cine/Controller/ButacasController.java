@@ -1,6 +1,8 @@
 package com.cinema.cine.Controller;
 
 import com.cinema.cine.Entity.Butaca;
+import com.cinema.cine.Entity.Funcion;
+import com.cinema.cine.Entity.Pelicula;
 import com.cinema.cine.Service.ButacaServiceIMPL.BSIMPL;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,5 +54,12 @@ public class ButacasController {
     public ResponseEntity<?> ElimnarButaca(@PathVariable int id){
         this.bsimpl.EliminarButaca(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    @RequestMapping(value = "BuscarButacasBySala/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> BuscarFuncionByPelicula(@PathVariable int id){
+        List<Butaca> listarButaca = this.bsimpl.findBySala(id);
+        return ResponseEntity.ok(listarButaca);
     }
 }
