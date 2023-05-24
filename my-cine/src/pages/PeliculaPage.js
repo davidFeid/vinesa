@@ -1,10 +1,12 @@
 import './PeliculaPage.css';
 import './Home.css';
+import './Carga.css';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {PeliculaService} from '../service/PeliculaService';
 import {FuncionService} from "../service/FuncionService";
 import {Dialog} from "primereact/dialog"; // Importa la clase directamente
+import { Link } from 'react-router-dom';
 
 function PeliculaPage() {
     const { id } = useParams();
@@ -58,18 +60,20 @@ function PeliculaPage() {
     };
 
 
-    if (!pelicula) {
+    if (!pelicula || !funcion) {
         // Mientras se obtienen los datos de la película, puedes mostrar un indicador de carga o un mensaje
-        return <div>Cargando pelicula...</div>;
+        return <div>
+                <div class="loading-container">
+                    <h1 class="loading-text">Cargando...</h1>
+                    <div class="loading-spinner"></div>
+                  </div>
+                </div>;
     }
-    if (!funcion) {
-        // Mientras se obtienen los datos de la película, puedes mostrar un indicador de carga o un mensaje
-        return <div>Cargando funcion...</div>;
-    }
+
 
     // Una vez que se obtienen los datos, puedes mostrar la información de la película
     return (
-
+        <div className="containerPeliculasPage">
         <div className="pelicula-page">
             <div className="pelicula-header">
                 <h2 className="pelicula-titulo">{pelicula.titulo}</h2>
@@ -98,9 +102,10 @@ function PeliculaPage() {
                     <div className="pelicula-sesiones">
                         <h4>Sesiones:</h4>
                         {funcion.map((f, index) => (
-                            <p className="horario-funcion" key={index}>{f.horario}</p>
+                            <Link to={`/funciones/${f.id_funcion}`} key={f.id_funcion}>
+                                <p className="horario-funcion">{f.horario}</p>
+                            </Link>
                         ))}
-                        <br/>
                     </div>
                     <div className="pelicula-trailer">
                         <h4>Tráiler:</h4>
@@ -116,6 +121,7 @@ function PeliculaPage() {
                     <iframe width="100%" height="400" src={videoUrl} title="YouTube Video" frameBorder="0" allowFullScreen />
                 </div>
             </Dialog>
+        </div>
         </div>
     );
 }

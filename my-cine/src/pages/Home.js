@@ -13,6 +13,7 @@ export default class Home extends  Component{
         super(props);
         this.state = {
             peliculas: [],
+            funciones: [],
             visibleVideo: false,
             videoUrl: "",
             visible : false,
@@ -35,6 +36,9 @@ export default class Home extends  Component{
     }
     componentDidMount() {
         this.peliculaService.getAll().then(data => this.setState({peliculas: data}) );
+        this.funcionService.getAll().then(data => this.setState({funciones: data}) );
+
+
     }
 
     openVideo = (videoUrl) => {
@@ -43,6 +47,7 @@ export default class Home extends  Component{
     closeVideo = () => {
         this.setState({ visibleVideo: false, videoUrl: "" });
     };
+
 
     render() {
 
@@ -56,49 +61,62 @@ export default class Home extends  Component{
         const day = today.getDate();
         const formattedDate = `${day} ${abbreviatedMonth}`;
 
-
         return (
-            <div>
-                <h1>Cartellera</h1>
+            <div className="container">
+                <div>
 
-                <div className="card-container" >
-                    {this.state.peliculas.map((pelicula) => (
+                    <h1>Cartellera</h1>
 
-                        <div className="card" key={pelicula.idPelicula}>
-                            <div className="card-image-container">
-                                <img
-                                    src={pelicula.imagen}
-                                    alt="Imagen de la carta"
-                                />
-                                <div className="card-overlay">
-                                    <Link to={`/peliculas/${pelicula.idPelicula}`}>
-                                        <h2>{pelicula.titulo}</h2>
-                                    </Link>
-                                    <p>Hoy,{formattedDate}</p>
+                    <div className="card-container" >
+                        {this.state.peliculas.map((pelicula) => (
+                            <div className="cardCartelera" key={pelicula.idPelicula}>
+                                <div className="card-image-container">
+                                    <img
+                                        src={pelicula.imagen}
+                                        alt="Imagen de la carta"
+                                    />
+                                    <div className="card-overlay">
+                                        <Link to={`/peliculas/${pelicula.idPelicula}`}>
+                                            <h2>{pelicula.titulo}</h2>
+                                        </Link>
+                                        <p>Hoy,{formattedDate}</p>
+                                        <Link to={`/peliculas/${pelicula.idPelicula}`}>
+                                            <p className="card-horario"> VER HORARIOS</p>
+                                        </Link>
+                                    </div>
+                                </div>
+
+                               <div className="card-content">
+                                 {this.state.funciones
+                                   .filter(funcion => funcion.pelicula.idPelicula === pelicula.idPelicula)
+                                   .map(f => (
+                                     <Link to={`/funciones/${f.id_funcion}` }key={f.id_funcion}>
+                                       <p className="horario-funcion">{f.horario}</p>
+                                     </Link>
+                                   ))}
+                               </div>
+
+                                <div className="card-buttons">
+                                    <button className="card-button" onClick={() => this.openVideo(pelicula.video)}>
+                                        <i className="pi pi-caret-right"> Trailer</i>
+                                    </button>
+                                    <button className="card-button">
+                                        <Link to={`/peliculas/${pelicula.idPelicula}`}>
+                                            <i className="pi  pi-book"> Info</i>
+                                        </Link>
+                                    </button>
                                 </div>
                             </div>
-                            <div className="card-content">
-                                <button className="card-button">
-                                    <i className="pi  pi-book"> VER MÁS DÍAS</i>
-                                </button>
-                            </div>
-                            <div className="card-buttons">
-                                <button className="card-button" onClick={() => this.openVideo(pelicula.video)}>
-                                    <i className="pi pi-caret-right"> Trailer</i>
-                                </button>
-                                <button className="card-button">
-                                    <i className="pi  pi-book"> Info</i>
-                                </button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                <Dialog visible={this.state.visibleVideo} onHide={this.closeVideo} modal={true} style={{ width: "70vw" }}>
-                    <div className="youtube-video">
-                        <iframe width="100%" height="400" src={this.state.videoUrl} title="YouTube Video" frameBorder="0" allowFullScreen />
+                        ))}
                     </div>
-                </Dialog>
+
+                    <Dialog visible={this.state.visibleVideo} onHide={this.closeVideo} modal={true} style={{ width: "70vw" }}>
+                        <div className="youtube-video">
+                            <iframe width="100%" height="400" src={this.state.videoUrl} title="YouTube Video" frameBorder="0" allowFullScreen />
+                        </div>
+                    </Dialog>
+
+            </div>
             </div>
         );
     }
