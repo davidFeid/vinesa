@@ -50,7 +50,6 @@ export class ButacaService {
     }
 
     getAllBySala(id){
-        console.log(id);
         return axios.get(this.baseUrl + "BuscarButacasBySala/" + id.id_sala)
             .then(res =>{
                 if (res.status === 201 || res.status === 200) { // si la petición se hizo con éxito

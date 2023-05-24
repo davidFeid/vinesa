@@ -1,0 +1,22 @@
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    position: absolute;
+    bottom: -20px; /* Ajusta la posición vertical según tus necesidades */
+    left: 50%; /* Ajusta la posición horizontal según tus necesidades */
+    transform: translateX(-50%);
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 5px;
+    border-radius: 4px;
+    text-align: center;
+    width: 150px; /* Ajusta el ancho según tus necesidades */
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    z-index:1;
+}
