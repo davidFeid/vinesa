@@ -1,8 +1,15 @@
 /* Center the content */
-.container {
+.containerHome {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
+}
+
+.slider {
+    width: 100%;
+
+
 }
 
 /* Styles for the card */
@@ -86,7 +93,9 @@
     border: 1px solid;
     color: rgb(255, 255, 255) !important;
 }
-
+.card-horario:hover{
+    background:  rgb(255, 0, 0) !important;
+}
 .card-content h3 {
     margin: 0;
     font-size: 16px;
@@ -99,6 +108,11 @@
     transform: translateX(-50%);
     display: none;
     z-index: 2;
+}
+.card-button:hover{
+    background:  rgb(255, 0, 0) !important;
+    color: rgb(255, 255, 255) !important;
+
 }
 
 .card-button a {
@@ -125,4 +139,5 @@
     text-transform: uppercase;
     border: 1px solid;
     color: rgb(255, 0, 0) !important;
+    text-decoration: none;
 }

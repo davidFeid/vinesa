@@ -8,6 +8,7 @@ import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import {AdminService} from "../../service/AdminService";
+import {Link} from "react-router-dom";
 
 export default class LoginUsuarioForm extends Component {
     constructor(props) {
@@ -86,7 +87,7 @@ export default class LoginUsuarioForm extends Component {
                                 <div className="center-text button-area">
                                     <button type="submit" className="btn btn-save">Iniciar Sesion</button>
                                 </div>
-
+                                <Link to="/registro" className="menu-item">Registrarse</Link>
                             </div>
                         </div>
                     </div>

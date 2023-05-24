@@ -5,6 +5,9 @@ import {FuncionService} from "../service/FuncionService";
 import { PrimeIcons } from 'primereact/api';
 import {Dialog} from "primereact/dialog";
 import { Link } from 'react-router-dom';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+
 
 
 
@@ -50,6 +53,7 @@ export default class Home extends  Component{
 
 
     render() {
+        console.log(this.state.funciones);
 
         const abbreviatedMonths  = [
             "ene", "feb", "mar", "abr", "may", "jun",
@@ -62,10 +66,27 @@ export default class Home extends  Component{
         const formattedDate = `${day} ${abbreviatedMonth}`;
 
         return (
-            <div className="container">
-                <div>
+            <div className="containerHome">
 
-                    <h1>Cartellera</h1>
+                <div className="slider">
+                    <Carousel>
+                        <div>
+                            <img src="https://www.ocinemagic.es/images/banner_content/FAST-X.webp" alt="Imagen 1" />
+                        </div>
+                        <div>
+                            <img src="https://www.ocinemagic.es/images/banner_content/PREVENTA-spider-man.webp" alt="Imagen 2" />
+                        </div>
+                        <div>
+                            <img src="https://www.ocinemagic.es/images/banner_content/LA-SIRENITA.webp" alt="Imagen 3" />
+                        </div>
+                        {/* Agrega más imágenes según sea necesario */}
+                    </Carousel>
+                </div>
+
+
+                <div className="peliculas-container">
+
+                    <h1>Cartelera</h1>
 
                     <div className="card-container" >
                         {this.state.peliculas.map((pelicula) => (
@@ -86,15 +107,22 @@ export default class Home extends  Component{
                                     </div>
                                 </div>
 
-                               <div className="card-content">
-                                 {this.state.funciones
-                                   .filter(funcion => funcion.pelicula.idPelicula === pelicula.idPelicula)
-                                   .map(f => (
-                                     <Link to={`/funciones/${f.id_funcion}` }key={f.id_funcion}>
-                                       <p className="horario-funcion">{f.horario}</p>
-                                     </Link>
-                                   ))}
-                               </div>
+                                <div className="card-content">
+                                    {this.state.funciones
+                                        .filter(funcion => {
+                                            if (typeof funcion.pelicula === 'object') {
+                                                return funcion.pelicula.idPelicula === pelicula.idPelicula;
+                                            } else {
+                                                return funcion.pelicula === pelicula.idPelicula;
+                                            }
+                                        })
+                                        .slice(0,4)
+                                        .map(f => (
+                                            <Link to={`/funciones/${f.id_funcion}`} key={f.id_funcion}>
+                                                <p className="horario-funcion">{f.horario}</p>
+                                            </Link>
+                                        ))}
+                                </div>
 
                                 <div className="card-buttons">
                                     <button className="card-button" onClick={() => this.openVideo(pelicula.video)}>

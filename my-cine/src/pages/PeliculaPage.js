@@ -7,6 +7,7 @@ import {PeliculaService} from '../service/PeliculaService';
 import {FuncionService} from "../service/FuncionService";
 import {Dialog} from "primereact/dialog"; // Importa la clase directamente
 import { Link } from 'react-router-dom';
+import {Carousel} from "react-responsive-carousel";
 
 function PeliculaPage() {
     const { id } = useParams();
@@ -25,7 +26,6 @@ function PeliculaPage() {
 
                 const response = await peliculaService.getPeliculaById(id);
                 setPelicula(response);
-                console.log(response);
             } catch (error) {
                 console.error(error);
                 // Manejar el error de alguna manera (por ejemplo, mostrar un mensaje de error)
@@ -37,7 +37,6 @@ function PeliculaPage() {
 
             const responseFuncion = await funcionService.BuscarFuncionByPelicula(id);
             setFuncion(responseFuncion);
-                console.log(responseFuncion);
 
         } catch (error) {
             console.error(error);
@@ -69,10 +68,29 @@ function PeliculaPage() {
                   </div>
                 </div>;
     }
-
+    const today = new Date();
+    const date = today.toLocaleDateString('es-EU', { year: 'numeric', day: '2-digit' ,month: '2-digit'});
+    const parts = date.split('/');
+    const formattedDate = parts.reverse().join('-');
 
     // Una vez que se obtienen los datos, puedes mostrar la información de la película
     return (
+
+        <div>
+        <div className="slider">
+            <Carousel>
+                <div>
+                    <img src="https://www.ocinemagic.es/images/banner_content/FAST-X.webp" alt="Imagen 1" />
+                </div>
+                <div>
+                    <img src="https://www.ocinemagic.es/images/banner_content/PREVENTA-spider-man.webp" alt="Imagen 2" />
+                </div>
+                <div>
+                    <img src="https://www.ocinemagic.es/images/banner_content/LA-SIRENITA.webp" alt="Imagen 3" />
+                </div>
+                {/* Agrega más imágenes según sea necesario */}
+            </Carousel>
+        </div>
         <div className="containerPeliculasPage">
         <div className="pelicula-page">
             <div className="pelicula-header">
@@ -101,7 +119,9 @@ function PeliculaPage() {
                     </div>
                     <div className="pelicula-sesiones">
                         <h4>Sesiones:</h4>
-                        {funcion.map((f, index) => (
+                        {funcion.filter(funcion => {
+                            return funcion.fecha === formattedDate;
+                        }).map((f, index) => (
                             <Link to={`/funciones/${f.id_funcion}`} key={f.id_funcion}>
                                 <p className="horario-funcion">{f.horario}</p>
                             </Link>
@@ -121,6 +141,7 @@ function PeliculaPage() {
                     <iframe width="100%" height="400" src={videoUrl} title="YouTube Video" frameBorder="0" allowFullScreen />
                 </div>
             </Dialog>
+        </div>
         </div>
         </div>
     );

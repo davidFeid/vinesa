@@ -77,6 +77,10 @@
     color: rgb(255, 0, 0) !important;
     margin-bottom: 10px;
 }
+.horario-funcion:hover{
+    color: rgb(255, 255, 255) !important;
+    background:  rgb(255, 0, 0) !important;
+}
 
 .card-button {
     cursor: pointer;

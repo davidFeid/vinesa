@@ -199,8 +199,6 @@ export default class Funcion extends Component{
                         <Column sortable filter field="fecha" header="Fecha"></Column>
                         <Column sortable filter field="precio" header="Precio"></Column>
                         <Column sortable filter field="estado" header="Estado"></Column>
-
-
                     </DataTable>
                 </Panel>
                 <Dialog header="Crear Funcion" visible={this.state.visible} style={{ width: '400px' }} footer={this.state.footer} modal={true} onHide={() => this.setState({visible : false})}>
