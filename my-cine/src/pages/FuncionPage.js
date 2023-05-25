@@ -114,8 +114,6 @@ function FuncionPage() {
             arrayObjetos: arrayString,
         };
 
-        console.log(objetoEnvio);
-
         reservaService
             .save(funcion.id_funcion, 'usuario1', objetoEnvio)
             .then((data) => {

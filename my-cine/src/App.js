@@ -5,10 +5,7 @@ import MyProtectedComponent from './pages/MyProtectedComponent';
 import RouteProtected from './pages/RouteProtected';
 import Layout  from "./pages/Layout";
 import LayoutAdmin  from "./pages/admin/Layout";
-import About  from "./pages/About";
 import Home from './pages/Home';
-import Default  from "./pages/Default";
-
 import Pelicula  from "./pages/admin/Pelicula";
 import Sala from "./pages/admin/Sala";
 import Butaca from "./pages/admin/Butaca";
@@ -40,7 +37,7 @@ function App() {
                 <Route path="/peliculas" >
                    <Route path={":id"}  element={<PeliculaPage />} />
                 </Route>
-                <Route path="/funciones" >
+                <Route path="/funciones" element={<LoginUsuarioForm path="/funciones" allowedRoles={['user']} element={<FuncionPage />}></LoginUsuarioForm>}>
                     <Route path={":id"}  element={<FuncionPage />} />
                 </Route>
              </Route>

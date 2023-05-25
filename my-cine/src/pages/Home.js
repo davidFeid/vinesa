@@ -53,8 +53,6 @@ export default class Home extends  Component{
 
 
     render() {
-        console.log(this.state.funciones);
-
         const abbreviatedMonths  = [
             "ene", "feb", "mar", "abr", "may", "jun",
             "jul", "ago", "sep", "oct", "nov", "dic"
