@@ -108,13 +108,19 @@ export default class Home extends  Component{
                                 <div className="card-content">
                                     {this.state.funciones
                                         .filter(funcion => {
+                                            // Filtrar solo las funciones del día de hoy y en adelante
+                                            const funcionDate = new Date(funcion.fecha);
+                                            return funcionDate >= today;
+                                        })
+                                        .filter(funcion => {
+                                            // Filtrar las funciones de la película actual
                                             if (typeof funcion.pelicula === 'object') {
                                                 return funcion.pelicula.idPelicula === pelicula.idPelicula;
                                             } else {
                                                 return funcion.pelicula === pelicula.idPelicula;
                                             }
                                         })
-                                        .slice(0,4)
+                                        .slice(0, 4)
                                         .map(f => (
                                             <Link to={`/funciones/${f.id_funcion}`} key={f.id_funcion}>
                                                 <p className="horario-funcion">{f.horario}</p>

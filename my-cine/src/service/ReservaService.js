@@ -5,6 +5,7 @@ export class ReservaService {
     baseUrl = `http://localhost:8080/AdminReserva/`
 
     save(funcion,usuario,reserva){
+        console.log(reserva);
         return axios.post(this.baseUrl + "CrearReserva/" + funcion + '/' + usuario, reserva)
             .then(res =>{
                 if (res.status === 201 || res.status === 200) { // si la petición se hizo con éxito

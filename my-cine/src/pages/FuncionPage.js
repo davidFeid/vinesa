@@ -107,7 +107,7 @@ function FuncionPage() {
         const precioTotal = numButacas * precioPorButaca;
 
 
-
+         console.log(arrayString);
         const objetoEnvio = {
             precio: precioTotal,
             estado: 1,
