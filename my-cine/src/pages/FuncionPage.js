@@ -28,6 +28,7 @@ function FuncionPage() {
     const butacaReservaService = new ButacaReservaService();
     const reservaService = new ReservaService();
 
+    const username = JSON.parse(localStorage.getItem('userInfo'));
     useEffect(() => {
         const getFuncion = async () => {
             try {
@@ -105,7 +106,6 @@ function FuncionPage() {
         const numButacas = butacasSeleccionadas.length;
         const precioTotal = numButacas * precioPorButaca;
 
-        console.log(arrayString);
 
 
         const objetoEnvio = {
@@ -115,7 +115,7 @@ function FuncionPage() {
         };
 
         reservaService
-            .save(funcion.id_funcion, 'usuario1', objetoEnvio)
+            .save(funcion.id_funcion, username.username, objetoEnvio)
             .then((data) => {
                 // this.toast.show({ severity: 'success', summary: 'Éxito', detail: 'Formulario guardado exitosamente' });
                 // Agregar lógica para mostrar un mensaje de éxito en lugar de usar `this.toast.show()`

@@ -1,7 +1,10 @@
-import { Outlet, Link } from "react-router-dom";
+import {Outlet, Link, Navigate} from "react-router-dom";
 import "./Layout.css";
 import sadRobot from '../assets/images/logo-ocine-mag.png';
 import React from "react";
+
+
+const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
 const Layout = () => {
     return (
@@ -15,9 +18,16 @@ const Layout = () => {
                     <li>
                         <Link to="/about" className="menu-item">About</Link>
                     </li>
-                    <li>
-                        <Link to="/login" className="menu-item">Login</Link>
-                    </li>
+                    {!userInfo || !userInfo.authenticated ? (
+                        <li>
+                            <Link to="/login" className="menu-item">Login</Link>
+                        </li>
+                    ) : null}
+                    {userInfo && userInfo.authenticated ? (
+                        <li>
+                            <Link to="/CerrarSesion" className="menu-item">Cerrar Sesión</Link>
+                        </li>
+                    ) : null}
                 </ul>
             </nav>
             <hr />

@@ -36,6 +36,7 @@ export default class LoginUsuarioForm extends Component {
                     };
 
                     localStorage.setItem('userInfo', JSON.stringify(userInfo));
+                    this.toast.show({ severity: 'success', summary: 'Confirm', detail: 'Confimado, iniciar sesion' });
                     window.location.replace('/home');
                 }else{
                     this.toast.show({ severity: 'error', summary: 'Error', detail: 'Ocurrió un error al intentar iniciar sesion' });

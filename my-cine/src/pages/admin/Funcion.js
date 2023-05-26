@@ -194,7 +194,7 @@ export default class Funcion extends Component{
                                currentPageReportTemplate="{first} to {last} of {totalRecords}" tableStyle={{ minWidth: '50rem' }} selectionMode={"single"} selection={this.state.selectedFuncion} onSelectionChange={e => this.setState({selectedFuncion: e.value, footer: this.footerEdit})}>
                         <Column sortable filter field="id_funcion" header="Id Funcion"></Column>
                         <Column sortable filter field="sala.id_sala" header="Sala"></Column>
-                        <Column sortable filter field="pelicula.titulo" header="Pelicula"></Column>
+                        <Column sortable filter field="pelicula.titulo" header="Pelicula" body={(rowData) => rowData.pelicula.titulo}></Column>
                         <Column sortable filter field="horario" header="Horario"></Column>
                         <Column sortable filter field="fecha" header="Fecha"></Column>
                         <Column sortable filter field="precio" header="Precio"></Column>
